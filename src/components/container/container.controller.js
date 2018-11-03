@@ -5,8 +5,6 @@ angular.module('boiler')
     log.setStack(boiler.enums.codeBlocks.controller, 'containerController');
 
     const vm = this;
-    vm.containerTheme = boiler.config.container.defaultTheme;
-    vm.backgroundColor = boiler.config.container.defaultBackgroundColor;
     vm.nav = false;
-
+    vm.containerSize = boiler.config.container[vm.size] || boiler.config.container.large;
   }]);

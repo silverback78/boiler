@@ -17,3 +17,7 @@
 .boiler-navigation-container {
   position: relative;
 }
+
+.boiler-navigation md-nav-bar.md-default-theme .md-button._md-nav-button.md-unselected, .boiler-navigation md-nav-bar .md-button._md-nav-button.md-unselected {
+  color: #e155d5;
+}

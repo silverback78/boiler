@@ -2,19 +2,19 @@
   <div ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
     <div layout="column">
       <md-input-container class="md-block" flex-gt-sm>
-        <label>User Name</label>
-        <input name="username" ng-model="vm.username" autocomplete="username">
+        <label md-colors="{color:'default-background-50'}">User Name</label>
+        <input name="username" ng-model="vm.username" autocomplete="username" md-colors="{borderColor: 'default-background-50'}">
       </md-input-container>
 
       <md-input-container class="md-block" flex>
-        <label>User Password</label>
-        <input name="password" ng-model="vm.password" type="password" autocomplete="current-password">
+        <label md-colors="{color:'default-background-50'}">Password</label>
+        <input name="password" ng-model="vm.password" type="password" autocomplete="current-password" md-colors="{borderColor: 'default-background-50'}">
       </md-input-container>
     </div>
     <div layout="row" layout-align="center center">
       <a href="" md-colors="{color:'primary-900'}" ng-click="vm.newUser()">New User</a>
       <span flex></span>
-      <md-button class="md-raised md-primary" ng-click="vm.login()">Login</md-button>
+      <md-button md-theme="accent" class="md-raised" md-colors="{backgroundColor:'default-primary-700'}" ng-click="vm.login()">Login</md-button>
     </div>
   </div>
 

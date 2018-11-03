@@ -2,8 +2,8 @@
 
 angular.module('boiler')
 
-  .controller('paletteViewController', ['log', function(log) {
-    log.setStack(boiler.enums.codeBlocks.controller, 'paletteViewController');
+  .controller('demoViewController', ['log', function(log) {
+    log.setStack(boiler.enums.codeBlocks.controller, 'demoViewController');
 
     const vm = this;
 

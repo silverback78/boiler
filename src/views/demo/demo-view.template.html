@@ -1,0 +1,52 @@
+<boiler-container padding="true">
+  <div layout="row" layout-align="center center" style="margin: 50px;">
+    <div layout="column" layout-align="center center">
+      <div ng-repeat="paletteIndex in vm.paletteIndexes" class="palette-swatch" md-colors="::{background: 'default-primary-{{paletteIndex}}'}"></div>
+    </div>
+    <div layout="column" layout-align="center center">
+      <div ng-repeat="paletteIndex in vm.paletteIndexes" class="palette-swatch" md-colors="::{background: 'default-accent-{{paletteIndex}}'}"></div>
+    </div>
+    <div layout="column" layout-align="center center">
+      <div ng-repeat="paletteIndex in vm.paletteIndexes" class="palette-swatch" md-colors="::{background: 'default-warn-{{paletteIndex}}'}"></div>
+    </div>
+    <div layout="column" layout-align="center center">
+      <div ng-repeat="paletteIndex in vm.paletteIndexes" class="palette-swatch" md-colors="::{background: 'default-background-{{paletteIndex}}'}"></div>
+    </div>
+  </div>
+</boiler-container>
+
+<boiler-container size="small" padding="true">
+  <div layout="row" layout-xs="column" layout-align="center start">
+    <div flex style="width: 100%;">
+      <div class="md-headline" md-colors="{color:'primary-500'}">Container Directive</div>
+      default small
+    </div>
+  </div>
+</boiler-container>
+
+<boiler-container theme="accent" size="medium" padding="true">
+  <div layout="row" layout-xs="column" layout-align="center start">
+    <div flex style="width: 100%;">
+      <div class="md-headline" md-colors="{color:'primary-500'}">Container Directive</div>
+      accent medium
+    </div>
+  </div>
+</boiler-container>
+
+<boiler-container theme="dark" size="large" padding="true">
+  <div layout="row" layout-xs="column" layout-align="center start">
+    <div flex style="width: 100%;">
+      <div class="md-headline" md-colors="{color:'primary-500'}">Container Directive</div>
+      dark large
+    </div>
+  </div>
+</boiler-container>
+
+<boiler-container size="full" padding="true">
+  <div layout="row" layout-xs="column" layout-align="center start">
+    <div flex style="width: 100%;">
+      <div class="md-headline" md-colors="{color:'primary-500'}">Container Directive</div>
+      default full width
+    </div>
+  </div>
+</boiler-container>

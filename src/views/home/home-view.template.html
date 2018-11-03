@@ -11,24 +11,16 @@
   <div layout="row" layout-align="center center" class="gutter-top">
     <img src="./src/images/copy-paste-study.png" class="home-diagram">
   </div>
-
-  <div layout="row" layout-align="center start">
-    <div flex-xs="100" flex-sm="100" flex="60">
-      <hr />
-    </div>
-  </div>
-  
-  <div layout="row" layout-align="center start" ng-if="vm.currentUser.loaded" class="home-login">
-    <div flex-xs="100" flex-sm="100" flex="60">
-      <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
-    </div>
-  </div>
 </boiler-container>
 
-<boiler-container theme="dark" size="medium">
+<boiler-container theme="accent" size="small" padding="true">
+    <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
+</boiler-container>
+
+<boiler-container theme="dark" size="medium" padding="true">
   <div layout="row" layout-xs="column" layout-align="center start">
     <div flex style="width: 100%;">
-      <boiler-pager pager-id="userPager" page-size="10" title="Recent Users" api-url="users" show-pages="true" item-link="['users','username']" columns="['username']"></boiler-pager>
+      <boiler-pager pager-id="userPager" page-size="10" title="Recent Users" api-url="users" show-pages="false" item-link="['users','username']" columns="['username']"></boiler-pager>
     </div>
     <div flex style="width: 100%;"></div>
     <div flex style="width: 100%;">

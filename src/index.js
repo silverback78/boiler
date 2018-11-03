@@ -42,9 +42,9 @@ require('./views/home/home-view.controller.js');
 require('./views/home/home-view.template.html');
 require('./views/home/home-view.styles.css');
 
-require('./views/palette/palette-view.controller.js');
-require('./views/palette/palette-view.template.html');
-require('./views/palette/palette-view.styles.css');
+require('./views/demo/demo-view.controller.js');
+require('./views/demo/demo-view.template.html');
+require('./views/demo/demo-view.styles.css');
 
 require('./views/study-widgets/study-widgets-view.controller.js');
 require('./views/study-widgets/study-widgets-view.template.html');
