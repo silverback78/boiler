@@ -1,0 +1,30 @@
+<form name="login">
+  <div ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
+    <div layout="column">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>User Name</label>
+        <input name="username" ng-model="vm.username" autocomplete="username">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex>
+        <label>User Password</label>
+        <input name="password" ng-model="vm.password" type="password" autocomplete="current-password">
+      </md-input-container>
+    </div>
+    <div layout="row" layout-align="center center">
+      <a href="" md-colors="{color:'primary-900'}" ng-click="vm.newUser()">New User</a>
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="vm.login()">Login</md-button>
+    </div>
+  </div>
+
+  <div ng-if="vm.currentUser.loaded && vm.currentUser.authenticated">
+    <div layout="row" layout-align="center center">
+      Welcome {{vm.currentUser.username}}.
+      <a href="#" ng-click="vm.go.toUser(vm.currentUser.username)">Go to your decks</a>
+      <a href="#" ng-click="vm.logout()">Logout</a>
+    </div>
+  </div>
+
+  <boiler-create-user create-user-id="createUser" show="vm.showCreateUserDialog" on-save="vm.onCreateUser()"></boiler-create-user>
+</form>

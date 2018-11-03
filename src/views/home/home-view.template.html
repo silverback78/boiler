@@ -1,0 +1,38 @@
+<boiler-container>
+  <div layout="row" layout-align="center center" class="gutter-top">
+    <div flex-xs="100" flex-sm="100" flex="60">
+      <p><strong md-colors="{color:'accent-900'}" class="md-headline">Study</strong> <em md-colors="{color:'primary-500'}" class="md-headline">faster</em>.</p>
+      <p><i>StudyWidgets</i> was designed with efficiency in mind.</p>
+      <p>You already typed your notes once. Why should you have to type them <em>again?</em></p>
+      <p>We don’t think you should. <a href="#">Learn how this works</a>.</p>
+    </div>
+  </div>
+
+  <div layout="row" layout-align="center center" class="gutter-top">
+    <img src="./src/images/copy-paste-study.png" class="home-diagram">
+  </div>
+
+  <div layout="row" layout-align="center start">
+    <div flex-xs="100" flex-sm="100" flex="60">
+      <hr />
+    </div>
+  </div>
+  
+  <div layout="row" layout-align="center start" ng-if="vm.currentUser.loaded" class="home-login">
+    <div flex-xs="100" flex-sm="100" flex="60">
+      <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
+    </div>
+  </div>
+</boiler-container>
+
+<boiler-container theme="dark" size="medium">
+  <div layout="row" layout-xs="column" layout-align="center start">
+    <div flex style="width: 100%;">
+      <boiler-pager pager-id="userPager" page-size="10" title="Recent Users" api-url="users" show-pages="true" item-link="['users','username']" columns="['username']"></boiler-pager>
+    </div>
+    <div flex style="width: 100%;"></div>
+    <div flex style="width: 100%;">
+      <boiler-pager pager-id="deckPager" page-size="10" title="Recent Decks" api-url="decks" show-pages="false" item-link="['users','username','name','card-list']" columns="['name']"></boiler-pager>
+    </div>
+  </div>
+</boiler-container>

@@ -1,0 +1,59 @@
+
+<boiler-container nav="true" theme="dark">
+  <div layout="row" class="boiler-navigation-container" layout-padding hide show-gt-sm>
+    <div flex="30">
+        <a href="home"><img src="./src/images/logo-header.png" alt="Boiler"></a>
+    </div>
+    <div flex>
+      <md-nav-bar theme="dark" md-hue-2 md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+        <div ng-repeat="(index, navItem) in vm.navItems">
+          <md-nav-item md-nav-href="{{navItem.href}}" name="{{navItem.name}}">{{navItem.label}}</md-nav-item>
+        </div>
+        <div ng-if="vm.currentUser.authenticated">
+          <md-nav-item md-nav-href="users/{{vm.currentUser.username}}" name="/users">My Decks</md-nav-item>
+        </div>
+        <div ng-if="vm.currentUser.authenticated">
+          <md-nav-item md-nav-href="home" name="logout" ng-click="vm.logout()">Logout</md-nav-item>
+        </div>
+      </md-nav-bar>
+    </div>
+  </div>
+</boiler-container>
+
+<div layout="row" layout md-theme="dark" class="boiler-navigation boiler-navigation-mobile" hide-gt-sm>
+  <div flex>
+    <a href="home"><img src="./src/images/logo-mobile.png" alt="Boiler"></a>
+  </div>
+  <div layout="row" layout-align="center center">
+    <i md-colors="{color: 'background-50'}" class="material-icons boiler-navigation-hamburger" ng-click="vm.openSidenav()">menu</i>
+  </div>
+</div>
+
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+  <md-toolbar class="md-theme-light">
+    <h1 class="md-toolbar-tools">boiler</h1>
+  </md-toolbar>
+
+  <md-menu-content width="4" ng-repeat="(index, navItem) in vm.navItems">
+    <md-menu-item>
+      <md-button ng-disabled="navItem.name === vm.location.path()" ng-click="vm.loadRoute(navItem.name)">
+        {{navItem.label}}
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+  <hr ng-if="vm.currentUser.authenticated" />
+  <md-menu-content width="4" ng-if="vm.currentUser.authenticated">
+    <md-menu-item>
+        <md-button ng-disabled="vm.location.path().startsWith('/users')" ng-click="vm.go.toUser(vm.currentUser.username)">
+          My Decks
+        </md-button>
+    </md-menu-item>
+  </md-menu-content>
+  <md-menu-content width="4" ng-if="vm.currentUser.authenticated">
+    <md-menu-item>
+      <md-button ng-click="vm.logout()">
+        Logout
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+</md-sidenav>

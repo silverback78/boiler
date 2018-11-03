@@ -1,0 +1,133 @@
+  <boiler-sequencer sequencer-id="createUser" dialog="true" dialog-size="small" dialog-class="boiler-create-user-dialog" title="Create a User">
+
+    <boiler-sequencer-step next-label="Let's do it">
+      <div layout-gt-sm="row">
+        <div class="boiler-create-user-instructions">
+          Start by choosing a username.
+        </div>
+      </div>
+
+      <div layout-gt-sm="row">
+
+        <input required hidden name="nameAvailable" ng-model="vm.form.nameAvailable">
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Username</label>
+          <div ng-switch="vm.checkingName" class="blr-async-notifier">
+            <md-progress-circular ng-switch-when="checking" class="md-hue-2" md-diameter="18px"></md-progress-circular>
+            <div>
+              <md-tooltip md-direction="left">Username is available.</md-tooltip>
+              <i class="material-icons blr-async-success" md-colors="{color:'primary-900'}" ng-switch-when="available">check_circle_outline</i>
+            </div>
+            <div>
+                <md-tooltip md-direction="left">Username is taken.</md-tooltip>
+                <i class="material-icons blr-async-error" md-colors="{color:'warn-600'}" ng-switch-when="unavailable">highlight_off</i>
+            </div>
+          </div>
+          <input required name="username" ng-model="vm.form.username" ng-pattern="/^[a-z0-9\ \-]+$/i" minlength="7" ng-model-options="{ debounce: vm.debounce }" ng-attr-autofocus="true" autocomplete="username">
+          <div ng-messages="vm.child_createUser.sequencerForm.username.$error" ng-show="vm.child_createUser.sequencerForm.username.$dirty">
+            <div ng-message="required">Username is required.</div>
+            <div ng-message="pattern">Username must be alphanumeric.</div>
+            <div ng-message="minlength">Username must be 7 characters or longer.</div>
+          </div>
+        </md-input-container>
+
+      </div>
+    </boiler-sequencer-step>
+
+    <boiler-sequencer-step next-label="Set Password">
+      <div layout-gt-sm="row">
+        <div class="boiler-create-user-instructions">
+          Now set your password.
+        </div>
+      </div>
+
+      <div layout="row">
+        
+        <md-input-container class="md-block" flex>
+          <label>User Password</label>
+          <input required name="userPassword" ng-model="vm.form.password" type="password" ng-attr-autofocus="true" autocomplete="current-password">
+          <div ng-messages="vm.child_createUser.sequencerForm.userPassword.$error">
+            <div ng-message="required">User password is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" flex>
+          <label>Verify Password</label>
+          <input required name="verifyPassword" ng-model="vm.form.verifyPassword" type="password" ng-pattern="{{vm.password}}" autocomplete="new-password">
+          <div ng-messages="vm.child_createUser.sequencerForm.verifyPassword.$error">
+            <div ng-message="pattern">Passwords don't match.</div>
+          </div>
+        </md-input-container>
+        
+      </div>
+
+    </boiler-sequencer-step>
+
+    <boiler-sequencer-step next-label="Almost Done">
+      <div layout-gt-sm="row">
+        <div class="boiler-create-user-instructions">
+          A password hint is <strong><em md-colors="{color:'primary'}">strongly</em></strong> recommended. It is your only hope if you forget your password.
+        </div>
+      </div>
+
+      <div layout-gt-sm="row">
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Password Hint</label>
+          <input ng-model="vm.form.passwordHint" ng-attr-autofocus="true">
+        </md-input-container>
+
+      </div>
+    </boiler-sequencer-step>
+
+    <boiler-sequencer-step next-label="Make User" on-show="vm.setFormInvalid()" on-next="vm.save()">
+      <div layout-gt-sm="row">
+        <div class="boiler-create-user-instructions">
+          Gotta make sure you're not a robot. You're not a robot, are you?
+        </div>
+      </div>
+
+      <div class="boiler-create-user-captcha">
+        <input required hidden name="reCaptchaResponse" ng-model="vm.reCaptchaResponse">
+        <boiler-recaptcha parent-vm="vm"></boiler-recaptcha>
+      </div>
+    </boiler-sequencer-step>
+
+    <boiler-sequencer-step on-next="vm.getStarted()" next-label="Get Started">
+      <div layout-gt-sm="row">
+        <div class="boiler-create-user-instructions">
+          All set! Visit your account and start adding decks.
+        </div>
+      </div>
+
+      <div class="boiler-create-user-done">
+        <i class="material-icons boiler-create-user-done-icon" md-colors="{color:'primary-900'}">sentiment_very_satisfied</i>
+      </div>
+    </boiler-sequencer-step>
+  </div>
+  </boiler-sequencer>
+
+  <boiler-dialog dialog-id="captchaErrorDialog" size="small" title="Are you really not a robot?" buttons="[{ label: 'Try again', class: 'md-raised md-primary', close: true }]">
+    <pane-content>
+      <p>
+        Something went wrong with the captcha verification (that little thingy that asks if you're a robot).
+      </p>
+      <p>
+        <strong>Please, go ahead and try again...</strong>
+      </p>
+    </pane-content>
+  </boiler-dialog>
+
+  <boiler-dialog dialog-id="validationErrorDialog" size="small" title="Never go in against a Sicilian when death is on the line!" buttons="[{ label: 'I\'m sorry.', class: 'md-raised md-primary', close: true }]">
+    <pane-content>
+      <p>
+        Well, ya did it <strong md-colors="{color:'primary-900'}"><em>Smartypants McHackypoop</em></strong>. You got around my client side validation.
+        You must think you're pretty sneaky, huh? What did you do, paste an existing
+        name and hit next before it had time to validate it?
+      </p>
+      <p>
+        <strong>Don't worry kemosabe, there's still server side validation</strong>.
+      </p>
+    </pane-content>
+  </boiler-dialog>

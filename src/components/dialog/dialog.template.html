@@ -1,0 +1,31 @@
+<div hide>
+  <div class="md-dialog-container {{vm.dialogClass}}" id="{{vm.dialogId}}">
+    <md-dialog aria-label="{{vm.title}}" class="ng-style: vm.maxWidth;">
+      <form name="vm.dialogForm">
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>{{vm.title}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.hideDialog()">
+                <i class="material-icons">clear</i>
+            </md-button>
+          </div>
+        </md-toolbar>
+    
+        <md-dialog-content class="ng-style: vm.maxWidth;">
+          <md-content layout-padding>
+            <div ng-transclude="content"></div>
+          </md-content>
+        </md-dialog-content>
+    
+        <md-dialog-actions layout="row" md-colors="{background: 'background-900'}" md-theme="dark">
+          <span flex></span>
+          <div ng-transclude="buttons"></div>
+          <div ng-repeat="button in vm.buttons">
+            <md-button class="{{button.class}}" ng-click="vm.action(button.action, button.close)">{{button.label}}</md-button>
+          </div>
+        </md-dialog-actions>
+      </form>
+    </md-dialog>
+  </div>
+</div>

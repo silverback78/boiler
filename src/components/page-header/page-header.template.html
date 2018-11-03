@@ -1,0 +1,21 @@
+<boiler-container full-width="true">
+    <md-toolbar md-scroll-shrink>
+      <div layout="row">
+        <div flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
+        <div flex>
+  
+          <div layout="row">
+            <div flex-xs="5" flex-sm="0" flex-md="10" flex="15"></div>
+            <div flex>
+              <div class="md-toolbar-tools boiler-page-header">
+                <ng-transclude></ng-transclude>
+              </div>
+            </div>
+            <div flex-xs="5" flex-sm="0" flex-md="10" flex="15"></div>
+          </div>
+  
+        </div>
+        <div flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
+      </div>
+    </md-toolbar>
+  </boiler-container>

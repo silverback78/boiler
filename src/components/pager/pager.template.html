@@ -1,0 +1,75 @@
+<div ng-if="!vm.static">
+  <div layout="row" layout-align="center center" class="boiler-pager-row">
+    <div flex>
+      <md-list>
+        <span class="md-headline boiler-pager-headline" md-colors="{color:'primary-500'}">{{vm.title}}</span>
+          <md-list-item class="md-1-line" ng-repeat="item in vm.data.page.items" ng-click="vm.clickItem(item, $event)">
+          <div class="md-list-item-text boiler-pager-column-container ">
+              <div class="md-list-item-text" layout="row" class="boiler-pager-column-container">
+                <div layout="column" ng-repeat="column in vm.pagerColumns"  class="boiler-pager-column-cell ng-style: vm.pagerColumnWidth">
+                  <span ng-if="column === 'username'">{{item[column] | usernameFilter}}</span>
+                  <span ng-if="column !== 'username'">{{item[column]}}</span>
+                </div>
+              </div>
+          </div>
+          <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+
+  <div layout="row" layout-align="center center" ng-if="vm.pagerShowPages && vm.data.page.totalPages > 1" class="boiler-pager-buttons">
+
+    <div flex="18">
+      <md-button class="md-raised md-primary" ng-click="vm.selectPage(vm.currentPage - 1)" ng-disabled="vm.currentPage === 0"><i class="material-icons">keyboard_arrow_left</i></md-button>
+    </div>
+
+    <div flex="64" class="boiler-pager-pages">
+      <md-button ng-repeat="i in [].constructor(vm.data.page.totalPages) track by $index" class="md-raised md-primary" ng-click="vm.selectPage($index)" ng-disabled="vm.currentPage === $index">{{$index + 1}}</md-button>
+    </div>
+
+    <div flex="18">
+      <md-button class="md-raised md-primary" ng-click="vm.selectPage(vm.currentPage + 1)" ng-disabled="vm.currentPage === vm.data.page.totalPages - 1"><i class="material-icons">keyboard_arrow_right</i></md-button>
+    </div>
+
+  </div>
+
+</div>
+
+<div ng-if="vm.static">
+  <div layout="row" layout-align="center center" class="boiler-pager-row">
+    <div flex>
+      <md-list>
+        <span class="md-headline boiler-pager-headline" md-colors="{color:'primary-500'}">{{vm.title}}</span>
+          <md-list-item ng-disabled="vm.disabled" class="md-1-line" ng-repeat="item in vm.staticData.page.items" ng-click="vm.clickItem(item, $event)">
+          <div class="md-list-item-text boiler-pager-column-container ">
+              <div class="md-list-item-text" layout="row" class="boiler-pager-column-container">
+                <div layout="column" ng-repeat="column in vm.pagerColumns"  class="boiler-pager-column-cell ng-style: vm.pagerColumnWidth">
+                  <span ng-if="column === 'username'">{{item[column] | usernameFilter}}</span>
+                  <span ng-if="column !== 'username'">{{item[column]}}</span>
+                </div>
+              </div>
+          </div>
+          <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+
+  <div layout="row" layout-align="center center" ng-if="vm.pagerShowPages && vm.staticData.page.totalPages > 1" class="boiler-pager-buttons">
+
+    <div flex="18">
+      <md-button class="md-raised md-primary" ng-click="vm.selectPage(vm.currentPage - 1)" ng-disabled="vm.currentPage === 0"><i class="material-icons">keyboard_arrow_left</i></md-button>
+    </div>
+
+    <div flex="64" class="boiler-pager-pages">
+      <md-button ng-repeat="i in [].constructor(vm.staticData.page.totalPages) track by $index" class="md-raised md-primary" ng-click="vm.selectPage($index)" ng-disabled="vm.currentPage === $index">{{$index + 1}}</md-button>
+    </div>
+
+    <div flex="18">
+      <md-button class="md-raised md-primary" ng-click="vm.selectPage(vm.currentPage + 1)" ng-disabled="vm.currentPage === vm.staticData.page.totalPages - 1"><i class="material-icons">keyboard_arrow_right</i></md-button>
+    </div>
+
+  </div>
+
+</div>

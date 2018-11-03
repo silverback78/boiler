@@ -1,0 +1,46 @@
+.boiler-sequencer-progress {
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+}
+
+.boiler-sequencer-progress-container {
+  position: relative;
+  width: 46px;
+  display: inline-block;
+}
+
+.boiler-sequencer-progress-container:last-child {
+  display: none;
+}
+
+.boiler-sequencer-progress-circle {
+  font-size: 36px;
+  font-weight: 400;
+}
+
+.boiler-sequencer-progress-icon {
+  position: absolute;
+  font-size: 20px;
+  top: 8px;
+  left: 13px;
+}
+
+.boiler-sequencer-progress-active {
+  position: absolute;
+  font-size: 22px;
+  top: 7px;
+  left: 12px;
+}
+
+.boiler-sequencer-progress-line {
+  position: absolute;
+  width: 20px;
+  top: 2px;
+  left: 30px;
+  font-size: 32px;
+}
+
+.boiler-sequencer-button {
+  width: 150px;
+}

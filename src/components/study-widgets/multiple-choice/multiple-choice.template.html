@@ -1,0 +1,80 @@
+<div layout-margin layout-padding>
+
+    <study-widgets-progress-bar progress="vm.progress" negative-progress="vm.negativeProgress"></study-widgets-progress-bar>
+    
+    <div layout="row" ng-if="!vm.complete && !vm.failed">
+      <div flex-xs="0" flex-sm="0" flex="5"></div>
+      <div flex>
+        <span class="md-headline" md-colors="{color:'accent-900'}">
+          {{vm.currentCards[vm.currentCardId].term}}
+        </span>
+      </div>
+      <div flex-xs="0" flex-sm="0" flex="5"></div>
+    </div>
+
+    <div layout="row">
+      <div flex>
+        <md-radio-group ng-model="vm.answer" ng-click="vm.answered = true" ng-if="!vm.complete">
+          <md-radio-button ng-disabled="vm.answered" ng-repeat="choice in vm.choices" ng-value="choice">
+            <span ng-class="vm.answered && !choice.correct ? 'multiple-choice-incorrect' : ''" md-colors="vm.answered && choice.correct ? {color:'primary-900'} : vm.answered ? {color:'warn-600'} : {}">{{choice.definition}}</span>
+          </md-radio-button>
+        </md-radio-group>
+
+        <div layout-padding layout layout-align="center center" class="boiler-flashcards-flashcard" md-colors="{background: 'primary-900'}" ng-if="vm.passed"><h2 class="boiler-flashcards-complete">{{vm.successMessage}}</h2></div>
+        <div layout-padding layout layout-align="center center" class="boiler-flashcards-flashcard" md-colors="{background: 'warn-900'}" ng-if="vm.failed"><h2 class="boiler-flashcards-complete">{{vm.failureMessage}}</h2></div>
+  
+      </div>
+    </div>
+
+    <div layout="row">
+      <div flex>
+        <md-card-actions layout="row" layout-align="center">
+          <md-button ng-if="!vm.complete && !vm.answered || vm.answered && vm.answer.correct" ng-disabled="!vm.answered" class="md-raised md-primary" ng-click="vm.next(true)">Next</md-button>
+          <md-button ng-if="!vm.complete && vm.answered && !vm.answer.correct" class="md-raised md-warn" ng-click="vm.next(false)">Oops</md-button>
+          <md-button ng-if="vm.complete" class="md-raised" ng-class="vm.missedCards.length ? '' : 'md-primary'" ng-click="vm.studyAll()">Again</md-button>
+          <md-button ng-if="vm.missedCards.length && vm.complete" class="md-raised md-primary" ng-click="vm.studyMissed()">Missed Cards Only</md-button>
+        </md-card-actions>
+      </div>
+    </div>
+
+<!-- 
+    <div layout="row">
+      <div flex>
+        <md-radio-group ng-model="vm.mcCorrect" ng-click="vm.mcQuestionAnswered = true" ng-if="!vm.complete && !vm.failed">
+          <md-radio-button ng-repeat="choice in vm.mcChoices" ng-value="choice.correct">
+            <span md-colors="vm.mcQuestionAnswered && vm.mcCorrect ? {color:'primary-500'} : vm.mcQuestionAnswered ? {color:'warn-600'} : {}">{{choice}}</span>
+          </md-radio-button>
+        </md-radio-group>
+
+        <div layout-padding layout layout-align="center center" class="boiler-flashcards-flashcard" md-colors="{background: 'primary-900'}" ng-if="vm.complete"><h2 class="boiler-flashcards-complete">{{vm.successMessage}}</h2></div>
+        <div layout-padding layout layout-align="center center" class="boiler-flashcards-flashcard" md-colors="{background: 'warn-900'}" ng-if="vm.failed"><h2 class="boiler-flashcards-complete">{{vm.failureMessage}}</h2></div>
+      </div>
+    </div>
+ -->
+    <!--
+    <div layout="row">
+      <div flex>
+        <md-radio-group ng-model="vm.correct" ng-click="vm.onAnswerSelected()" ng-if="!vm.complete && !vm.failed">
+          <md-radio-button ng-repeat="choice in vm.choices" ng-value="choice.correct">
+            <span md-colors="vm.questionAnswered && vm.isAnswerCorrect(choice) ? {color:'primary-500'} : vm.questionAnswered ? {color:'warn-600'} : {}">{{choice}}</span>
+          </md-radio-button>
+        </md-radio-group>
+
+        <div layout-padding layout layout-align="center center" class="boiler-flashcards-flashcard" md-colors="{background: 'primary-900'}" ng-if="vm.complete"><h2 class="boiler-flashcards-complete">{{vm.successMessage}}</h2></div>
+        <div layout-padding layout layout-align="center center" class="boiler-flashcards-flashcard" md-colors="{background: 'warn-900'}" ng-if="vm.failed"><h2 class="boiler-flashcards-complete">{{vm.failureMessage}}</h2></div>
+      </div>
+    </div>
+
+    <div layout="row">
+      <div flex>
+          <md-card-actions layout="row" layout-align="center">
+            <md-button ng-if="!vm.complete && !vm.failed && !vm.questionAnswered || vm.answerIsCorrect" ng-disabled="!vm.questionAnswered" class="md-raised md-primary" ng-click="vm.correct()">Next</md-button>
+            <md-button ng-if="!vm.complete && !vm.failed && vm.questionAnswered && !vm.answerIsCorrect" class="md-raised md-primary" ng-click="vm.incorrect()">Oops</md-button>
+            <md-button ng-if="vm.complete || vm.failed" class="md-raised" ng-class="vm.missedCards.length ? '' : 'md-primary'" ng-click="vm.studyAll()">Again</md-button>
+            <md-button ng-if="vm.missedCards.length && (vm.complete || vm.failed)" class="md-raised md-primary" ng-click="vm.studyMissed()">Missed Cards Only</md-button>
+          </md-card-actions>
+      </div>
+    </div>
+    -->
+  
+  </div>

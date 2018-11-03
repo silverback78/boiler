@@ -1,0 +1,19 @@
+.boiler-navigation {
+  background: #741975;
+  background: -moz-linear-gradient(-87deg, #741975 0%, #360237 100%);
+  background: -webkit-linear-gradient(-87deg, #741975 0%,#360237 100%);
+  background: linear-gradient(177deg, #741975 0%,#360237 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741975', endColorstr='#360237',GradientType=1 );
+}
+
+.boiler-navigation-mobile {
+  padding: 5px;
+}
+
+.boiler-navigation-hamburger {
+  cursor: pointer;
+}
+
+.boiler-navigation-container {
+  position: relative;
+}

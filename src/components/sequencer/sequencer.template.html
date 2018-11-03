@@ -1,0 +1,36 @@
+<form name="vm.sequencerForm">
+  <div ng-if="!vm.dialog">
+    <div ng-transclude></div>
+
+    <md-input-container class="md-block">
+      <md-button class="md-raised" ng-click="vm.back()" ng-disabled="(vm.step === 0) || (vm.step >= vm.steps.length - 1)">{{vm.steps[vm.step].backLabel || 'Back'}}</md-button>
+      <md-button class="md-raised md-primary" ng-click="vm.next()" ng-if="vm.step < vm.steps.length - 1" ng-disabled="vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Next'}}</md-button>
+      <md-button class="md-raised md-primary" ng-click="vm.startOver()" ng-if="vm.step >= vm.steps.length - 1" ng-disabled="vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Finish'}}</md-button>
+    </md-input-container>
+  </div>
+
+  <boiler-dialog dialog-id="sequencerDialog" size="{{vm.dialogSize}}" dialog-class="{{vm.dialogClass}}" title="{{vm.title}}" show="vm.show" ng-if="vm.dialog" dialog-form="vm.sequencerForm">
+
+    <pane-content>
+      <div class="boiler-sequencer-progress">
+
+        <div class="boiler-sequencer-progress-container" ng-repeat="step in vm.steps">
+          <i class="material-icons boiler-sequencer-progress-circle" md-colors="{color:'primary-900'}" ng-if="$index < vm.steps.length - 1">panorama_fish_eye</i>
+          <i class="material-icons boiler-sequencer-progress-active" md-colors="{color:'accent-600'}" ng-if="$index < vm.steps.length - 1 && vm.steps.indexOf(vm.selected) === $index">fiber_manual_record</i>
+          <i class="material-icons boiler-sequencer-progress-icon" md-colors="{color:'accent-600'}" ng-if="$index < vm.steps.length - 1 && vm.steps.indexOf(vm.selected) > $index">done</i>
+          <i class='material-icons boiler-sequencer-progress-line' md-colors="{color:'primary-900'}" ng-if="$index < vm.steps.length - 2">remove</i>
+        </div>
+
+      </div>
+
+      <div ng-transclude></div>
+    </pane-content>
+
+    <pane-buttons>
+      <md-button class="md-raised" ng-click="vm.back()" ng-disabled="(vm.step === 0) || (vm.step >= vm.steps.length - 1)">{{vm.steps[vm.step].backLabel || 'Back'}}</md-button>
+      <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.next()" ng-if="vm.step < vm.steps.length - 1" ng-disabled="vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Next'}}</md-button>
+      <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.finish()" ng-if="vm.step >= vm.steps.length - 1" ng-disabled="vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Finish'}}</md-button>
+    </pane-buttons>
+
+  </boiler-dialog>
+</form>

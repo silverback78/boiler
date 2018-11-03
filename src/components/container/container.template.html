@@ -1,0 +1,15 @@
+<div ng-if="!vm.nav" layout="row" md-theme="{{vm.containerTheme}}" md-colors="::{background: 'background'}" class="boiler-container">
+  <div ng-if="!vm.fullWidth" flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
+  <div flex ng-class="{'gutter-top': vm.padding, 'gutter-bottom': vm.padding}">
+    <div ng-transclude></div>
+  </div>
+  <div ng-if="!vm.fullWidth" flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
+</div>
+
+<div ng-if="vm.nav" layout="row" md-theme="{{vm.containerTheme}}" ng-class="{'boiler-navigation': vm.nav}">
+  <div ng-if="!vm.fullWidth" flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
+  <div flex ng-class="{'gutter-top': vm.padding, 'gutter-bottom': vm.padding}">
+    <div ng-transclude></div>
+  </div>
+  <div ng-if="!vm.fullWidth" flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
+</div>

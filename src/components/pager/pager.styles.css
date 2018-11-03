@@ -1,0 +1,31 @@
+
+.boiler-pager-buttons button {
+  width: 38px;
+  min-width: 38px;
+}
+
+.boiler-pager-buttons i {
+  top: 8px;
+  position: relative;
+}
+
+.boiler-pager-column-container {
+  width: 100%;
+}
+
+.boiler-pager-column-cell {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.boiler-pager-headline {
+  display: block; padding-left: 16px; line-height: 2em;
+}
+
+.boiler-pager-row {
+  width: 100%;
+}
+
+.boiler-pager-pages {
+  max-width: 64%;
+}

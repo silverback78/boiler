@@ -1,0 +1,31 @@
+.boiler-create-user-container {
+  height: 165px;
+}
+
+.boiler-create-user-instructions {
+  margin: 0 auto;
+  text-align: center;
+  padding: 25px 0 15px 0;
+  width: 335px;
+}
+
+.boiler-create-user-captcha {
+  margin: 0 auto;
+  text-align: center;
+  width: 302px;
+}
+
+.boiler-create-user-done {
+  margin: 0 auto;
+  text-align: center;
+  width: 302px;
+}
+
+.boiler-create-user-done-icon {
+  padding-top: 20px;
+  font-size: 40px;
+}
+
+.boiler-create-user-dialog md-content {
+  min-height: 230px;
+}

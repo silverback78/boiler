@@ -1,0 +1,23 @@
+<boiler-page-header>
+  <span ng-if="vm.username && vm.deck">
+    <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | usernameFilter}}</span> / {{vm.deck | usernameFilter}}
+  </span>
+</boiler-page-header>
+
+<boiler-container padding="true">
+  <div layout="row">
+    <div flex-xs="0" flex-sm="0" flex-md="10" flex="15"></div>
+    <div flex>
+
+      <boiler-select-widget></boiler-select-widget>
+
+      <boiler-card-list ng-if="vm.widget === 'card-list'"></boiler-card-list>
+
+      <boiler-flashcards ng-if="vm.widget === 'flashcards'"></boiler-flashcards>
+
+      <boiler-multiple-choice ng-if="vm.widget === 'multiple-choice'"></boiler-multiple-choice>
+
+    </div>
+    <div flex-xs="0" flex-sm="0" flex-md="10" flex="15"></div>
+  </div>
+</boiler-container>

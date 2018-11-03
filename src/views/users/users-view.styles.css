@@ -1,0 +1,11 @@
+.users-add {
+  position: relative;
+}
+
+.users-add-icon {
+  position: absolute;
+  right: -4px;
+  top: 15px;
+  font-size: 35px;
+  cursor: pointer;
+}

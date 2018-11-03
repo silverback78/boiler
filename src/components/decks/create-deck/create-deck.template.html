@@ -1,0 +1,61 @@
+<boiler-sequencer sequencer-id="createDeck" dialog="true" dialog-size="large" title="Create a Deck">
+
+  <boiler-sequencer-step next-label="Generate" on-next="vm.generatePreview()">
+    <md-input-container class="md-block boiler-create-card-deck-text">
+      <label>Copy and Paste Deck</label>
+      <textarea class="boiler-create-deck-textarea" required ng-model="vm.parseText" rows="10" md-select-on-focus></textarea>
+    </md-input-container>
+  </boiler-sequencer-step>
+
+  <boiler-sequencer-step next-label="Looks Good" on-next="vm.save()">
+    <md-content layout-padding class="boiler-create-deck-content-padding">
+      <div class="blr-alert blr-alert-danger" role="alert" ng-if="vm.duplicateNames.length > 0">
+        <div class="md-headline gutter-bottom"><strong><em md-colors="{color:'warn-600'}">Warning:</em></strong> The following decks will be replaced if you proceed.</div>
+        <ul>
+          <li ng-repeat="deck in vm.duplicateNames"><strong>{{deck}}</strong></li>
+        </ul>
+      </div>
+    </md-content>
+
+    <div ng-repeat="deck in vm.decks">
+      <md-content layout-padding>
+        <div class="md-headline gutter-bottom"><strong><em md-colors="{color:'primary-900'}">{{deck.name}}</em></strong> <small class="blr-text-muted" ng-if="deck.description"> &mdash; {{deck.description}}</small></div>
+        <md-grid-list md-cols-gt-md="12" md-cols="1" md-cols-md="8" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+          <md-grid-tile ng-repeat="card in deck.cards" md-colspan-gt-sm="{{vm.getColSize(card.definition)}}" md-rowspan-gt-sm="{{vm.getColSize(card.definition)}}">
+            <div md-whiteframe="1" class="boiler-create-deck-card">
+              <md-toolbar class="boiler-create-deck-card-term">
+                <div>{{card.term}}</div>
+              </md-toolbar>
+              <div class="boiler-create-deck-card-definition">{{card.definition}}</div>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-content>
+    </div>
+  </boiler-sequencer-step>
+
+  <boiler-sequencer-step next-label="Sweet">
+    <div class="boiler-create-deck-message">
+      Done and done. Check out your new deck.
+    </div>
+    <div class="boiler-create-deck-icon-container">
+      <i class="material-icons boiler-create-deck-icon" md-colors="{color:'primary-900'}">thumb_up</i>
+    </div>
+  </boiler-sequencer-step>
+
+</boiler-sequencer>
+
+<boiler-dialog dialog-id="errorDialog" size="medium" title="Whoops!" buttons="[{ label: 'Ok', close: true }]">
+  <pane-content>
+    <p><strong>Something went wrong while trying to save your cards.</strong></p>
+    <md-list flex>
+      <md-list-item ng-disabled="true" class="md-1-line boiler-create-deck-list-item" ng-repeat="item in vm.errors track by $index" ng-click="null">
+        <div class="md-list-item-text" ng-disabled="true">
+          <h3><strong>{{item.deck}}:</strong></h3>
+          <p>{{item.error}}</p>
+        </div>
+        <md-divider class="boiler-create-deck-divider"></md-divider>
+      </md-list-item>
+    </md-list>
+  </pane-content>
+</boiler-dialog>
