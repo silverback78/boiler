@@ -23,8 +23,8 @@ angular.module('boiler')
     $scope.$root.$on('$routeChangeSuccess', (e, current) => {
       log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', '$scope.$root.$on($routeChangeSuccess)']);
       let startIndex = 0;
-      let invalid = -1;
-      let offset = 1;
+      let invalid = Number.negativeOne;
+      let offset = Number.one;
 
       let paramIndex = current.$$route.originalPath.indexOf(':');
       let currentRoute = paramIndex === invalid

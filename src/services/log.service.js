@@ -123,7 +123,7 @@ angular.module('boiler')
         return;
       }
 
-      let styleParamPosition = 1;
+      let styleParamPosition = Number.one;
       let stylesEnabled = console.debug.length === styleParamPosition && boiler.config.features.log.stylesEnabled;
       let infoStyle;
 
