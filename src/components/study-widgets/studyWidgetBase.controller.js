@@ -82,7 +82,7 @@ angular.module('boiler')
 
       vm.currentCards.map((card, index) => {
         card.exposure = vm.exposure;
-        card.originalId = card.id;
+        card.originalId = card.originalId || card.id;
         card.id = index;
       });
 

@@ -1,21 +1,32 @@
-<boiler-container>
-  <div layout="row" layout-align="center center" class="gutter-top">
-    <div flex-xs="100" flex-sm="100" flex="60">
-      <p><strong md-colors="{color:'accent-900'}" class="md-headline">Study</strong> <em md-colors="{color:'primary-500'}" class="md-headline">faster</em>.</p>
-      <p><i>StudyWidgets</i> was designed with efficiency in mind.</p>
-      <p>You already typed your notes once. Why should you have to type them <em>again?</em></p>
-      <p>We don’t think you should. <a href="#">Learn how this works</a>.</p>
-    </div>
-  </div>
 
-  <div layout="row" layout-align="center center" class="gutter-top">
-    <img src="./src/images/copy-paste-study.png" class="home-diagram">
+<div layout="row" layout-sm="column" layout-xs="column">
+  <div flex-xs="0" flex-sm="0" flex-md="10" flex="20" md-colors="{backgroundColor:'default-background-50'}"></div>
+  <div flex>
+    <boiler-container size="full">
+      <div layout="column" hide show-xs show-sm layout-align="center center" class="gutter-top">
+        <img src="./src/images/logo-medium.png" class="home-diagram">
+        <div>
+          <h3 class="md-headline boiler-home-headline" md-colors="{color:'default-primary-900'}">Study straight from your notes.</h3>
+        </div>
+        <md-button md-theme="accent" class="md-raised boiler-home-show-more" md-colors="{backgroundColor:'default-accent-900'}" ng-click="vm.login()">Show Me More</md-button>
+      </div>
+    
+      <div layout="column" hide show-gt-sm layout-align="center center" class="gutter-top">
+        <img src="./src/images/logo-large.png" class="home-diagram">
+        <div>
+          <h3 class="md-headline boiler-home-headline" md-colors="{color:'default-primary-900'}">Study straight from your notes.</h3>
+        </div>
+        <md-button md-theme="accent" class="md-raised boiler-home-show-more" md-colors="{backgroundColor:'default-accent-900'}" ng-click="vm.login()">Show Me More</md-button>
+      </div>
+    </boiler-container>
   </div>
-</boiler-container>
-
-<boiler-container theme="accent" size="small" padding="true">
-    <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
-</boiler-container>
+  <div flex md-colors="{backgroundColor:'default-primary-900'}">
+    <boiler-container theme="accent" size="large" padding="true">
+      <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
+    </boiler-container>
+  </div>
+  <div flex-xs="0" flex-sm="0" flex-md="10" flex="20" md-colors="{backgroundColor:'default-primary-900'}"></div>
+</div>
 
 <boiler-container theme="dark" size="medium" padding="true">
   <div layout="row" layout-xs="column" layout-align="center start">

@@ -17,6 +17,8 @@ angular.module('boiler')
 
     vm.onChooseNextCardComplete = () => {
       log.setStack(boiler.enums.codeBlocks.controller, ['multipleChoiceController', 'vm.onChooseNextCardComplete()']);
+      if (vm.complete) return;
+
       let choices = [];
 
       const numberOfChoices = vm.originalCards.length > vm.defaultNumberOfChoices
