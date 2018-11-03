@@ -17,12 +17,6 @@ angular.module('boiler')
     vm.pagerColumns = [];
     vm.pagerColumnWidth = [];
 
-    vm.clickItem = (item) => {
-      if (angular.isFunction(vm.onClick)) {
-        vm.onClick(item);
-      }
-    };
-
     vm.getPage = () => {
       if (vm.static) {
         return;
