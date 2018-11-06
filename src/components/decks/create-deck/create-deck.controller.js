@@ -24,11 +24,14 @@ angular.module('boiler')
 
     vm.save = () => {
       vm.errors = [];
+      log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'vm.save()']);
 
       Promise.all(
         vm.decks.map(
           deck => api.createDeck(vm.currentUser.username, vm.currentUser.password, deck.name, deck.description, deck.cards)
             .then((response) => {
+              log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.createDeck(' + vm.currentUser.username + ', ' + vm.currentUser.password + ', ' + deck.name + ', ' + deck.description, deck.cards + '))']);
+              log.debug ('response', response);
               if (response.data.statusCode === boiler.config.errorStatus) {
                 vm.errors.push({
                   deck: deck.name,

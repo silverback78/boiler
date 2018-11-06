@@ -9,7 +9,11 @@
     <div flex>
       <div ng-if="vm.username" class="users-add">
         <i class="material-icons users-add-icon" md-colors="{color:'accent-900'}" ng-click="vm.child_createDeck.showCreateDeck()" ng-if="vm.currentUser.authenticated && vm.currentUser.username === vm.username">add_circle</i>
-        <boiler-pager pager-id="decksPager" title="Decks" api-url="decks/{{vm.username}}" item-link="['users','username','name','card-list']" columns="['name']"></boiler-pager>
+        <div layout="row" ng-if="vm.currentUser.authenticated && vm.currentUser.username === vm.username && vm.child_decksPager.data.page.totalCount === '0'" class="gutter-top">
+          <img src="./src/images/get-started.png" class="users-view-get-started" alt="To get started, click the plus icon named add circle">
+          <div class="users-view-get-started-spacer"></div>
+        </div>
+        <boiler-pager ng-if="vm.child_decksPager.data.page.totalCount !== '0'" pager-id="decksPager" title="Decks" api-url="decks/{{vm.username}}" item-link="['users','username','name','card-list']" columns="['name']"></boiler-pager>
       </div>
     </div>
     <div flex-xs="0" flex-sm="0" flex-md="10" flex="15"></div>

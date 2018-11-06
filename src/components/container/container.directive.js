@@ -15,8 +15,32 @@ angular.module('boiler')
       compile: () => {
         return {
           pre: ($scope) => {
-            $scope.vm.theme = 'default';
+            $scope.vm.theme = $scope.vm.theme || 'default';
             $scope.vm.containerSize = boiler.config.container[$scope.vm.size] || boiler.config.container.large;
+
+            switch($scope.vm.theme) {
+            case 'dark':
+              $scope.vm.theme = 'dark';
+              $scope.vm.colors = {
+                backgroundColor: 'background-A400',
+                color: 'background-50'
+              };
+              break;
+            case 'accent':
+              $scope.vm.theme = 'dark';
+              $scope.vm.colors = {
+                backgroundColor: 'primary-900',
+                color: 'background-50'
+              };
+              break;
+            default:
+              $scope.vm.theme = 'default';
+              $scope.vm.colors = {
+                backgroundColor: 'background-50',
+                color: 'background-A400'
+              };
+              break;
+            }
           }
         };
       },

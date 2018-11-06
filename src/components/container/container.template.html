@@ -1,4 +1,4 @@
-<div ng-if="!vm.nav" layout="row" md-theme="{{vm.theme}}" md-colors="::{backgroundColor: '{{vm.theme}}-background-50', color: '{{vm.theme}}-background-A400'}" class="boiler-container">
+<div ng-if="!vm.nav" layout="row" md-colors="vm.colors" class="boiler-container">
   <div flex-xs="{{vm.containerSize.flexXs}}" flex-sm="{{vm.containerSize.flexSm}}" flex-md="{{vm.containerSize.flexMd}}" flex="{{vm.containerSize.flex}}"></div>
   <div flex ng-class="{'gutter-top': vm.padding, 'gutter-bottom': vm.padding}">
     <div ng-transclude></div>

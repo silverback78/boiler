@@ -2,7 +2,7 @@
 
 angular.module('boiler')
 
-  .factory('go', ['$location', 'log', ($location, log) => {
+  .factory('go', ['$location', 'log', 'usernameUrlFilter', ($location, log, usernameUrlFilter) => {
 
     const home = () => {
       log.setStack(boiler.enums.codeBlocks.service, ['go', 'home()']);
@@ -10,6 +10,7 @@ angular.module('boiler')
     };
 
     const toUser = (user) => {
+      user = usernameUrlFilter(user);
       log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ')']);
       $location.path('users/' + user);
 

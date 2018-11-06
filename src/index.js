@@ -24,6 +24,7 @@ require('./services/log.service.js');
 
 /* Filters */
 require('./filters/user-name.filter.js');
+require('./filters/user-name-url.filter.js');
 
 /* Images */
 importAll(require.context('./images/', false, /\.(png|jpe?g|svg)$/));
@@ -126,5 +127,6 @@ require('./components/users/create-user/create-user.styles.css');
 require('./components/users/login/login.directive.js');
 require('./components/users/login/login.controller.js');
 require('./components/users/login/login.template.html');
+require('./components/users/login/login.styles.css');
 
 require('./components/users/user.service.js');

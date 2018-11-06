@@ -9,3 +9,13 @@
   font-size: 35px;
   cursor: pointer;
 }
+
+.users-view-get-started {
+  position: absolute;
+  right: 37px;
+  top: 53px;
+}
+
+.users-view-get-started-spacer {
+  height: 269px;
+}

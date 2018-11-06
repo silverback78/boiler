@@ -2,7 +2,7 @@
 
 angular.module('boiler')
 
-  .factory('authentication', ['api', 'log', 'user', (api, log, user) => {
+  .factory('authentication', ['api', 'log', 'user', 'usernameUrlFilter', (api, log, user, usernameUrlFilter) => {
 
     const initialize = () => {
       api.getSessionValue(boiler.config.users.sessionKey)
@@ -18,7 +18,7 @@ angular.module('boiler')
               loaded: true
             };
           user.authenticated = data.authenticated;
-          user.username = data.username;
+          user.username = usernameUrlFilter(data.username);
           user.password = data.password;
           user.loaded = true;
 
@@ -40,25 +40,24 @@ angular.module('boiler')
           log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ').then()']);
           log.debug('response', response);
 
-          let authenticated = response.data;
-          log.debug('authenticated', authenticated);
+          const data = response.data;
+          log.debug('user', data);
 
-          if (authenticated) {
+          user.username = usernameUrlFilter(data.username);
+          user.password = password;
+          user.loaded = true;
+
+          if (data.statusCode === boiler.config.apiSuccessCode) {
             api.setSessionValue(boiler.config.users.sessionKey, angular.toJson({
-              authenticated: authenticated,
-              username: username,
+              authenticated: true,
+              username: data.username,
               password: password,
               loaded: true
             }));
             user.authenticated = true;
-            user.authenticationFailed = false;
-            user.username = username;
-            user.password = password;
-            user.loaded = true;
           }
           else {
             user.authenticated = false;
-            user.authenticationFailed = true;
           }
         })
         .catch(() => {
