@@ -49,6 +49,7 @@ require('./views/demo/demo-view.styles.css');
 
 require('./views/study-widgets/study-widgets-view.controller.js');
 require('./views/study-widgets/study-widgets-view.template.html');
+require('./views/study-widgets/study-widgets-view.styles.css');
 
 /* Components */
 
@@ -116,6 +117,10 @@ require('./components/study-widgets/select-widget/select-widget.directive.js');
 require('./components/study-widgets/select-widget/select-widget.controller.js');
 require('./components/study-widgets/select-widget/select-widget.template.html');
 require('./components/study-widgets/select-widget/select-widget.styles.css');
+
+require('./components/toast/toast.directive.js');
+require('./components/toast/toast.controller.js');
+require('./components/toast/toast.styles.css');
 
 require('./components/users/authentication.service.js');
 

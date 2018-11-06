@@ -1,5 +1,5 @@
 <boiler-page-header>
-  <span ng-if="vm.username && vm.deck">
+  <span ng-if="vm.username && vm.deck" class="study-widgets-page-header">
     <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | usernameFilter}}</span> / {{vm.deck | usernameFilter}}
   </span>
 </boiler-page-header>
@@ -20,4 +20,8 @@
     </div>
     <div flex-xs="0" flex-sm="0" flex-md="10" flex="15"></div>
   </div>
+</boiler-container>
+
+<boiler-container theme="accent" size="large" padding="true" ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
+  <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
 </boiler-container>

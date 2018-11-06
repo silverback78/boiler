@@ -1,4 +1,15 @@
 .boiler-page-header {
   padding-left: 0;
   padding-right: 0;
+  white-space: nowrap;
+}
+
+.boiler-page-header::after {
+  content: '';
+  display: inline-block;
+  background-image: linear-gradient(to right, rgba(118, 7, 108, 0) , rgba(118, 7, 108, 1));
+  width: 90px;
+  height: 35px;
+  position: absolute;
+  right: 0;
 }

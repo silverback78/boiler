@@ -16,6 +16,7 @@ angular.module('boiler')
     vm.pagerData = {};
     vm.pagerColumns = [];
     vm.pagerColumnWidth = [];
+    vm.loaded = false;
 
     vm.getPage = () => {
       if (vm.static) {
@@ -34,6 +35,7 @@ angular.module('boiler')
             log.debug('response', response);
 
             vm.data = response.data;
+            vm.loaded = true;
           }
         )
         .catch(() => {

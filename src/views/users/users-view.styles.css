@@ -19,3 +19,18 @@
 .users-view-get-started-spacer {
   height: 269px;
 }
+
+.users-sad-face {
+  display: block;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.users-sad-face i {
+  font-size: 50px;
+}
+
+.users-no-decks {
+  text-align: center;
+  padding-top: 35px;
+}

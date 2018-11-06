@@ -13,7 +13,14 @@ angular.module('boiler')
     };
 
     vm.login = () => {
-      authentication.login(vm.username, vm.password);
+      authentication.login(vm.username, vm.password)
+        .then(() => {
+          vm.child_loginToast.showToast();
+        });
+    };
+
+    vm.toastContent = () => {
+      return 'Logged in as ' + vm.currentUser.username;
     };
 
     vm.logout = () => {

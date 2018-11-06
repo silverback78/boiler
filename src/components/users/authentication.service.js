@@ -34,36 +34,41 @@ angular.module('boiler')
       if (!username || !password) return;
       log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')']);
 
-      log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ')']);
-      api.authenticateUser(username, password)
-        .then((response) => {
-          log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ').then()']);
-          log.debug('response', response);
+      return new Promise((resolve, reject) => {
+        log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ')']);
+        api.authenticateUser(username, password)
+          .then((response) => {
+            log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ').then()']);
+            log.debug('response', response);
 
-          const data = response.data;
-          log.debug('user', data);
+            const data = response.data;
+            log.debug('user', data);
 
-          user.username = usernameUrlFilter(data.username);
-          user.password = password;
-          user.loaded = true;
+            user.username = usernameUrlFilter(data.username);
+            user.password = password;
+            user.loaded = true;
 
-          if (data.statusCode === boiler.config.apiSuccessCode) {
-            api.setSessionValue(boiler.config.users.sessionKey, angular.toJson({
-              authenticated: true,
-              username: data.username,
-              password: password,
-              loaded: true
-            }));
-            user.authenticated = true;
-          }
-          else {
-            user.authenticated = false;
-          }
-        })
-        .catch(() => {
-          log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ').catch()']);
-          log.error(boiler.config.verbiage.defaultCatchMessage);
-        });
+            if (data.statusCode === boiler.config.apiSuccessCode) {
+              api.setSessionValue(boiler.config.users.sessionKey, angular.toJson({
+                authenticated: true,
+                username: data.username,
+                password: password,
+                loaded: true
+              }));
+              user.authenticated = true;
+            }
+            else {
+              user.authenticated = false;
+            }
+
+            resolve();
+          })
+          .catch(() => {
+            reject();
+            log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')', 'api.authenticateBox(' + username + ').catch()']);
+            log.error(boiler.config.verbiage.defaultCatchMessage);
+          });
+      });
     };
 
     const logout = () => {

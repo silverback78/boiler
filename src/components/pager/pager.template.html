@@ -1,4 +1,4 @@
-<div ng-if="!vm.static">
+<div ng-if="!vm.static" ng-hide="!vm.loaded" ng-show="vm.loaded">
   <div layout="row" layout-align="center center" class="boiler-pager-row">
     <div flex>
       <md-list>
@@ -36,7 +36,7 @@
 
 </div>
 
-<div ng-if="vm.static">
+<div ng-if="vm.static" ng-hide="!vm.loaded" ng-show="vm.loaded">
   <div layout="row" layout-align="center center" class="boiler-pager-row">
     <div flex>
       <md-list>

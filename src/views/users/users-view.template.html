@@ -14,10 +14,26 @@
           <div class="users-view-get-started-spacer"></div>
         </div>
         <boiler-pager ng-if="vm.child_decksPager.data.page.totalCount !== '0'" pager-id="decksPager" title="Decks" api-url="decks/{{vm.username}}" item-link="['users','username','name','card-list']" columns="['name']"></boiler-pager>
+        <div class="users-no-decks" ng-if="vm.child_decksPager.data.page.totalCount === '0' && vm.currentUser.username !== vm.username">
+          <span class="md-headline" md-colors="{color:'primary-500'}">{{vm.username}}</span> has not yet added any decks.
+          <div class="users-sad-face">
+            <i class="material-icons" md-colors="{color:'primary-900'}">sentiment_dissatisfied</i>
+          </div>
+        </div>
       </div>
     </div>
     <div flex-xs="0" flex-sm="0" flex-md="10" flex="15"></div>
   </div>
 </boiler-container>
+
+<div layout="row" md-colors="{backgroundColor:'primary-900'}">
+  <div flex-xs="0" flex-sm="25" flex-md="30" flex="35"></div>
+  <div flex>
+    <boiler-container theme="accent" size="large" padding="true" ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
+      <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
+    </boiler-container>
+  </div>
+  <div flex-xs="0" flex-sm="25" flex-md="30" flex="35"></div>
+</div>
 
 <boiler-create-deck create-deck-id="createDeck" on-save="vm.refreshDecks()"></boiler-create-deck>
