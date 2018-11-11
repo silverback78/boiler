@@ -2,7 +2,7 @@
 
 angular.module('boiler')
 
-  .controller('createDeckController', ['api', 'createDeck', 'log', 'user', function(api, createDeck, log, user) {
+  .controller('createDeckController', ['api', 'createDeck', 'log', 'stash', 'user', function(api, createDeck, log, stash, user) {
     log.setStack(boiler.enums.codeBlocks.controller, 'createDeckController');
 
     const vm = this;
@@ -32,6 +32,8 @@ angular.module('boiler')
             .then((response) => {
               log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.createDeck(' + vm.currentUser.username + ', ' + vm.currentUser.password + ', ' + deck.name + ', ' + deck.description, deck.cards + '))']);
               log.debug ('response', response);
+              log.debug('Clearning stash for ' + vm.currentUser.username + ' ' + deck.name);
+              stash.set(vm.currentUser.username + deck.name, null);
               if (response.data.statusCode === boiler.config.errorStatus) {
                 vm.errors.push({
                   deck: deck.name,

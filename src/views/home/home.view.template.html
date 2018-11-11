@@ -1,14 +1,14 @@
 
 <div layout="row" layout-sm="column" layout-xs="column">
   <div flex-xs="0" flex-sm="0" flex-md="10" flex="20" md-colors="{backgroundColor:'background-50'}"></div>
-  <div flex>
+  <div flex md-colors="{backgroundColor:'background-50'}">
     <boiler-container size="full">
       <div layout="column" hide show-xs show-sm layout-align="center center" class="gutter-top">
         <img src="./src/images/logo-medium.png" class="home-diagram">
         <div>
           <h3 class="md-headline boiler-home-headline" md-colors="{color:'primary-900'}">Study straight from your notes.</h3>
         </div>
-        <md-button class="md-raised boiler-home-show-more" md-colors="{backgroundColor:'accent-900'}" ng-click="vm.login()">Show Me More</md-button>
+        <md-button class="md-raised boiler-home-show-more" md-colors="{backgroundColor:'accent-900'}" ng-click="vm.go.toHowItWorks()">Show Me More</md-button>
       </div>
     
       <div layout="column" hide show-gt-sm layout-align="center center" class="gutter-top">
@@ -16,7 +16,7 @@
         <div>
           <h3 class="md-headline boiler-home-headline" md-colors="{color:'primary-900'}">Study straight from your notes.</h3>
         </div>
-        <md-button class="md-raised boiler-home-show-more" md-colors="{backgroundColor:'accent-900'}" ng-click="vm.login()">Show Me More</md-button>
+        <md-button class="md-raised md-accent md-hue-1 boiler-home-show-more" ng-click="vm.go.toHowItWorks()">Show Me More</md-button>
       </div>
     </boiler-container>
   </div>

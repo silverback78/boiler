@@ -21,6 +21,12 @@ require('./boiler/theme.js');
 require('./services/api.service.js');
 require('./services/go.service.js');
 require('./services/log.service.js');
+require('./services/spinner.service.js');
+require('./services/stash.service.js');
+
+/* Directives */
+require('./directives/submit.directive.js');
+require('./directives/tab.directive.js');
 
 /* Filters */
 require('./filters/user-name.filter.js');
@@ -35,21 +41,25 @@ require('./boiler/styles.css');
 
 /* Views */
 
-require('./views/users/users-view.controller.js');
-require('./views/users/users-view.template.html');
-require('./views/users/users-view.styles.css');
+require('./views/users/users.view.controller.js');
+require('./views/users/users.view.template.html');
+require('./views/users/users.view.styles.css');
 
-require('./views/home/home-view.controller.js');
-require('./views/home/home-view.template.html');
-require('./views/home/home-view.styles.css');
+require('./views/home/home.view.controller.js');
+require('./views/home/home.view.template.html');
+require('./views/home/home.view.styles.css');
 
-require('./views/demo/demo-view.controller.js');
-require('./views/demo/demo-view.template.html');
-require('./views/demo/demo-view.styles.css');
+require('./views/how-it-works/how-it-works.view.controller.js');
+require('./views/how-it-works/how-it-works.view.template.html');
+require('./views/how-it-works/how-it-works.view.styles.css');
 
-require('./views/study-widgets/study-widgets-view.controller.js');
-require('./views/study-widgets/study-widgets-view.template.html');
-require('./views/study-widgets/study-widgets-view.styles.css');
+require('./views/demo/demo.view.controller.js');
+require('./views/demo/demo.view.template.html');
+require('./views/demo/demo.view.styles.css');
+
+require('./views/study-widgets/study-widgets.view.controller.js');
+require('./views/study-widgets/study-widgets.view.template.html');
+require('./views/study-widgets/study-widgets.view.styles.css');
 
 /* Components */
 
@@ -102,6 +112,7 @@ require('./components/study-widgets/study-widgets.styles.css');
 require('./components/study-widgets/card-list/card-list.directive.js');
 require('./components/study-widgets/card-list/card-list.controller.js');
 require('./components/study-widgets/card-list/card-list.template.html');
+require('./components/study-widgets/card-list/card-list.styles.css');
 
 require('./components/study-widgets/flashcards/flashcards.directive.js');
 require('./components/study-widgets/flashcards/flashcards.controller.js');

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('boiler')
-  .controller('studyWidgetBaseController', ['$routeParams', 'api', 'log', 'vm', function($routeParams, api, log, vm) {
+  .controller('studyWidgetBaseController', ['$routeParams', '$scope', 'api', 'log', 'stash', 'vm', function($routeParams, $scope, api, log, stash, vm) {
     log.setStack(boiler.enums.codeBlocks.controller, 'studyWidgetBaseController');
 
     vm.goAgainPrimary = boiler.config.studyWidgets.base.goAgainClass;
@@ -28,19 +28,43 @@ angular.module('boiler')
 
     vm.username = $routeParams.username;
     vm.deck = $routeParams.deck;
+    vm.childRegistered = false;
+
+    const unwatchChildRegistered = $scope.$watch('$scope.vm.childRegistered', () => {
+      log.setStack(boiler.enums.codeBlocks.directive, ['studyWidgetBaseController', '$scope.$watch($scope.vm.childRegistered)']);
+      if (vm.childRegistered) {
+        vm.initialize();
+      }
+      else {
+        log.error('Child study widget was not registered.');
+      }
+      unwatchChildRegistered();
+    });
 
     vm.initialize = () => {
-      api.getCardsByDeck(vm.username, vm.deck)
-        .then((response) => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['studyWidgetBaseController', 'api.initializeByDeck(' + vm.username + ', ' + vm.deck + ').then()']);
-          log.debug('response', response);
-          vm.originalCards = response.data.page.items;
-          vm.studyAll();
-        })
-        .catch(() => {
-          log.setStack(boiler.enums.codeBlocks.controller, 'studyWidgetBaseController', 'api.initializeByDeck(' + vm.username + ', ' + vm.deck +').catch()');
-          log.error(boiler.config.verbiage.defaultCatchMessage);
-        });
+      log.setStack(boiler.enums.codeBlocks.controller, ['studyWidgetBaseController', 'vm.initialize()']);
+      let stashedCards = stash.get(vm.username + vm.deck);
+
+      if (stashedCards) {
+        log.debug('Getting cards from stash.');
+        vm.originalCards = stashedCards;
+        vm.studyAll();
+      }
+      else {
+        api.getCardsByDeck(vm.username, vm.deck)
+          .then((response) => {
+            log.debug('Getting cards from server.');
+            log.setStack(boiler.enums.codeBlocks.controller, ['studyWidgetBaseController', 'api.initializeByDeck(' + vm.username + ', ' + vm.deck + ').then()']);
+            log.debug('response', response);
+            vm.originalCards = response.data.page.items;
+            stash.set(vm.username + vm.deck, vm.originalCards);
+            vm.studyAll();
+          })
+          .catch(() => {
+            log.setStack(boiler.enums.codeBlocks.controller, 'studyWidgetBaseController', 'api.initializeByDeck(' + vm.username + ', ' + vm.deck +').catch()');
+            log.error(boiler.config.verbiage.defaultCatchMessage);
+          });
+      }
     };
 
     vm.studyAll = () => {
@@ -161,6 +185,4 @@ angular.module('boiler')
       vm.updateProgress(correct);
       vm.chooseNextCard();
     };
-
-    vm.initialize();
   }]);

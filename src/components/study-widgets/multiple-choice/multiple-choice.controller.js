@@ -43,4 +43,6 @@ angular.module('boiler')
       vm.choices = choices;
       log.debug('vm.choices', vm.choices);
     };
+
+    vm.childRegistered = true;
   }]);

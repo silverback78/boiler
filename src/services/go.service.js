@@ -21,9 +21,15 @@ angular.module('boiler')
       $location.path('users/' + user + '/' + deck + '/' + widget);
     };
 
+    const toHowItWorks = () => {
+      log.setStack(boiler.enums.codeBlocks.service, ['go', 'toHowItWorks()']);
+      $location.path('how-it-works');
+    };
+
     return {
       home,
       toUser,
+      toHowItWorks,
       toWidget
     };
   }]);

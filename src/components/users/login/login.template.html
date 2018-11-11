@@ -1,20 +1,123 @@
-<form name="login">
   <div ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated" md-theme="dark">
-    <div layout="column">
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>User Name</label>
-        <input name="username" ng-model="vm.username" autocomplete="username" md-colors="{borderColor: 'background-50'}">
-      </md-input-container>
 
-      <md-input-container class="md-block" flex>
-        <label>Password</label>
-        <input name="password" ng-model="vm.password" type="password" autocomplete="current-password" md-colors="{borderColor: 'background-50'}">
-      </md-input-container>
-    </div>
-    <div layout="row" layout-align="center center">
-      <a href="#" md-colors="{color: 'background-50'}" ng-click="vm.newUser()">New User</a>
-      <span flex></span>
-      <md-button class="md-raised" md-colors="{backgroundColor:'primary-700'}" ng-click="vm.login()">Login</md-button>
+    <div ng-switch="vm.state" class="login-form">
+
+      <div ng-switch-when="authenticationFailedEmailOnFile">
+        <form name="vm.authFailedForm" boiler-submit="vm.resetPassword()">
+          <div class="md-headline" md-colors="{color:'primary-500'}">Invalid Password</div>
+          <p>The password you entered was invalid.</p>
+          <div layout="row" layout-align="center center">
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.tryAgain()">Try Again</md-button>
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.resetPassword()">Reset</md-button>
+          </div>
+        </form>
+      </div>
+
+      <div ng-switch-when="authenticationFailedNoEmailOnFile">
+        <form name="vm.authFailedFormNoEmail" boiler-submit="vm.tryAgain()">
+          <div class="md-headline" md-colors="{color:'primary-500'}">Invalid Password</div>
+          <p>The password you entered was invalid.</p>
+          <p>There is no e-mail address on file to reset this password.</p>
+          <p>Please check your username and password, then try again.</p>
+          <div layout="row" layout-align="center center">
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.tryAgain()">Try Again</md-button>
+          </div>
+        </form>
+      </div>
+
+      <div ng-switch-when="invalidRecoveryCode">
+        <form name="vm.invalidRecoveryCode" boiler-submit="vm.tryResetAgain()">
+          <div class="md-headline" md-colors="{color:'primary-500'}">Invalid</div>
+          <p>The recovery code you entered was invalid.</p>
+          <div layout="row" layout-align="center center">
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.tryResetAgain()">Try Again</md-button>
+          </div>
+        </form>
+      </div>
+
+      <div ng-switch-when="expiredRecoveryCode">
+        <form name="vm.expiredRecoveryCode" boiler-submit="vm.resetPassword()">
+          <div class="md-headline" md-colors="{color:'primary-500'}">Expired</div>
+          <p>This recovery code has expired. Please try resetting your password again.</p>
+          <div layout="row" layout-align="center center">
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.resetPassword()">Reset Password</md-button>
+          </div>
+        </form>
+      </div>
+
+      <div ng-switch-when="changeSuccessful">
+        <form name="vm.changeSuccessful" boiler-submit="vm.tryAgain()">
+          <div class="md-headline" md-colors="{color:'primary-500'}">Success</div>
+          <p>Your password has been changed. Please login again.</p>
+          <div layout="row" layout-align="center center">
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.tryAgain()">Ok</md-button>
+          </div>
+        </form>
+      </div>
+
+      <div ng-switch-when="resetPassword">
+        <form name="vm.resetPasswordForm" boiler-submit="vm.updatePassword()">
+          <div layout="column">
+            <div class="md-headline" md-colors="{color:'primary-500'}">Code Sent</div>
+            <p>A verification code has been sent to {{vm.email}}.</p>
+
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Code</label>
+              <input required name="code" ng-model="vm.code" autocomplete="code" md-colors="{borderColor: 'background-50'}">
+              <div ng-messages="vm.resetPasswordForm.code.$error" ng-show="vm.resetPasswordForm.code.$dirty">
+                <div ng-message="required">Code is required.</div>
+              </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>New Password</label>
+              <input required name="newPassword" ng-model="vm.newPassword"type="password" autocomplete="new-password" md-colors="{borderColor: 'background-50'}">
+              <div ng-messages="vm.resetPasswordForm.newPassword.$error" ng-show="vm.resetPasswordForm.newPassword.$dirty">
+                <div ng-message="required">Password is required.</div>
+              </div>
+            </md-input-container>
+      
+            <md-input-container class="md-block" flex>
+              <label>Verify Password</label>
+              <input required name="verifyPassword" ng-model="vm.verifyPassword" type="password" autocomplete="new-password" ng-pattern="{{vm.newPassword}}" md-colors="{borderColor: 'background-50'}">
+              <div ng-messages="vm.resetPasswordForm.verifyPassword.$error">
+                <div ng-message="pattern">Passwords don't match.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="row" layout-align="center center">
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.updatePassword()" ng-disabled="vm.resetPasswordForm.$invalid">Update</md-button>
+          </div>
+        </form>
+      </div>
+
+      <div ng-switch-default>
+        <form name="vm.loginForm" boiler-submit="vm.login()">
+          <div layout="column">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>User Name</label>
+              <input name="username" ng-model="vm.username" autocomplete="username" md-colors="{borderColor: 'background-50'}">
+            </md-input-container>
+      
+            <md-input-container class="md-block" flex>
+              <label>Password</label>
+              <input name="password" ng-model="vm.password" type="password" autocomplete="current-password" md-colors="{borderColor: 'background-50'}">
+            </md-input-container>
+          </div>
+          <div layout="row" layout-align="center center">
+            <a href="#" md-colors="{color: 'background-50'}" ng-click="vm.newUser()">New User</a>
+            <span flex></span>
+            <md-button class="md-raised md-primary md-hue-1" ng-click="vm.login()">Login</md-button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 
@@ -24,10 +127,10 @@
 
       <div layout="row" layout-align="center center" class="logged-in">
         <flex>
-          <md-button class="md-raised" md-colors="{backgroundColor:'primary-700'}" ng-click="vm.go.toUser(vm.currentUser.username)">My Decks</md-button>
+          <md-button class="md-raised md-primary md-hue-1" ng-click="vm.go.toUser(vm.currentUser.username)">My Decks</md-button>
         </flex>
         <flex>
-          <md-button class="md-raised" md-colors="{backgroundColor:'accent-800'}" ng-click="vm.logout()">Logout</md-button>
+          <md-button class="md-raised md-primary md-hue-1" ng-click="vm.logout()">Logout</md-button>
         </flex>
       </div>
     </div>

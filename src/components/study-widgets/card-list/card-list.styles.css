@@ -1,0 +1,37 @@
+.card-list-card-container {
+  cursor: pointer;
+}
+
+.card-list-card {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  padding: 20px;
+  height: calc(100% - 40px);
+}
+
+.card-list-item {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  padding: 20px 20px 0px 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 68px);
+  overflow: auto;
+  text-overflow: ellipsis;
+}
+
+.card-list-card .card-list-term {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.card-list-card .card-list-definition {
+  font-style: italic;
+}
+
+.card-list-flip-all {
+  text-align: center;
+  padding-top: 15px;
+}

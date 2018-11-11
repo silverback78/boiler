@@ -15,13 +15,15 @@ angular.module('boiler')
               authenticated: false,
               username: '',
               password: '',
+              email: '',
               loaded: true
             };
           user.authenticated = data.authenticated;
           user.username = usernameUrlFilter(data.username);
           user.password = data.password;
+          user.email = data.email;
           user.loaded = true;
-
+          log.debug('user', user);
         })
         .catch(() => {
           log.setStack(boiler.enums.codeBlocks.service, 'authentication');
@@ -53,15 +55,22 @@ angular.module('boiler')
                 authenticated: true,
                 username: data.username,
                 password: password,
+                email: data.email,
                 loaded: true
               }));
               user.authenticated = true;
             }
             else {
               user.authenticated = false;
+              if (data.referenceCode === boiler.config.user.emailOnFileErrorCode) {
+                user.emailOnFile = true;
+              }
+              else {
+                user.emailOnFile = false;
+              }
             }
 
-            resolve();
+            resolve(user);
           })
           .catch(() => {
             reject();

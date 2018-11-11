@@ -54,7 +54,7 @@
 
         <md-input-container class="md-block" flex>
           <label>Verify Password</label>
-          <input required name="verifyPassword" ng-model="vm.form.verifyPassword" type="password" ng-pattern="{{vm.password}}" autocomplete="new-password">
+          <input required name="verifyPassword" ng-model="vm.form.verifyPassword" type="password" ng-pattern="{{vm.form.password}}" autocomplete="new-password">
           <div ng-messages="vm.child_createUser.sequencerForm.verifyPassword.$error">
             <div ng-message="pattern">Passwords don't match.</div>
           </div>
@@ -67,15 +67,20 @@
     <boiler-sequencer-step next-label="Almost Done">
       <div layout-gt-sm="row">
         <div class="boiler-create-user-instructions">
-          A password hint is <strong><em md-colors="{color:'primary'}">strongly</em></strong> recommended. It is your only hope if you forget your password.
+          Enter your e-mail address. Optional, and used only for password recovery.
         </div>
       </div>
 
       <div layout-gt-sm="row">
 
         <md-input-container class="md-block" flex-gt-sm>
-          <label>Password Hint</label>
-          <input ng-model="vm.form.passwordHint" ng-attr-autofocus="true">
+          <label>E-mail address</label>
+          <input name="email" ng-model="vm.form.email" ng-attr-autofocus="true" ng-pattern="/^.+@.+\..+$/">
+          <div ng-messages="vm.child_createUser.sequencerForm.email.$error">
+            <div ng-message="pattern">
+              Invalid e-mail address.
+            </div>
+          </div>
         </md-input-container>
 
       </div>

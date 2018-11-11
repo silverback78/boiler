@@ -21,3 +21,9 @@
 .boiler-navigation md-nav-bar.md-theme .md-button._md-nav-button.md-unselected, .boiler-navigation md-nav-bar .md-button._md-nav-button.md-unselected {
   color: #e155d5;
 }
+
+.boiler-navigation-spinner {
+  position: absolute;
+  right: 36px;
+  top: 12px;
+}

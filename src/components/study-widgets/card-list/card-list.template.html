@@ -1,1 +1,24 @@
-<boiler-pager pager-id="decksPager" title="Cards" api-url="cards/{{vm.username}}/{{vm.deck}}" columns="['term', 'definition']"></boiler-pager>
+
+<div class="card-list-flip-all">
+  <md-button class="md-raised md-primary" ng-click="vm.flipAll()">Flip All</md-button>
+</div>
+<md-content layout-padding>
+  <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-md="12px" md-gutter="4px">
+    <md-grid-tile ng-click="vm.flipCard($index)" class="card-list-card-container" ng-repeat="card in vm.originalCards" md-colspan-gt-sm="1" md-rowspan-gt-sm="1">
+      <div md-whiteframe="1" class="card-list-card">
+        <div ng-if="!card.flipped" class="card-list-item card-list-term">
+          {{card.term}}
+        </div>
+        <div ng-if="card.flipped" class="card-list-item card-list-definition">
+          {{card.definition}}
+        </div>
+      </div>
+      <md-grid-tile-footer md-colors="{background: 'accent-900'}" layout-align="center center">
+        Flip
+      </md-grid-tile-footer>
+    </md-grid-tile>
+  </md-grid-list>
+</md-content>
+
+
+  

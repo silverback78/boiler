@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('boiler')
-  .controller('navigationController', ['$location', '$mdSidenav', '$scope', 'authentication', 'go', 'log', 'user', function($location, $mdSidenav, $scope, authentication, go, log, user) {
+  .controller('navigationController', ['$location', '$mdSidenav', '$scope', 'authentication', 'go', 'log', 'spinner', 'user', function($location, $mdSidenav, $scope, authentication, go, log, spinner, user) {
     log.setStack(boiler.enums.codeBlocks.controller, 'navigationController');
 
     const vm = this;
@@ -13,11 +13,18 @@ angular.module('boiler')
     vm.go = go;
     vm.navItems = [];
     vm.location = $location;
+    vm.spinner = spinner;
 
     vm.navItems.push({
       name: '/home',
       href: 'home',
       label: 'Home'
+    });
+
+    vm.navItems.push({
+      name: '/how-it-works',
+      href: 'how-it-works',
+      label: 'How it Works'
     });
 
     $scope.$root.$on('$routeChangeSuccess', (e, current) => {

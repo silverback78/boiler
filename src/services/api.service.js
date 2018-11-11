@@ -13,13 +13,13 @@ angular.module('boiler')
       return $http.get(url);
     };
 
-    const createUser = (username, password, passwordHint, reCaptchaResponse) => {
-      log.setStack(boiler.enums.codeBlocks.service, ['api', 'createUser(' + username + ', ' + password + ', ' + passwordHint + ', ' + reCaptchaResponse + ')']);
+    const createUser = (username, password, email, reCaptchaResponse) => {
+      log.setStack(boiler.enums.codeBlocks.service, ['api', 'createUser(' + username + ', ' + password + ', ' + email + ', ' + reCaptchaResponse + ')']);
 
       const payload = new FormData();
       payload.append('username', username);
       payload.append('password', password);
-      payload.append('passwordHint', passwordHint);
+      payload.append('email', email);
       payload.append('reCaptchaResponse', reCaptchaResponse);
 
       const url = boiler.config.apiUrl + boiler.config.user.apiUrl;
@@ -110,6 +110,32 @@ angular.module('boiler')
       return $http.get(url);
     };
 
+    const resetPassword = (username) => {
+      log.setStack(boiler.enums.codeBlocks.service, ['api', 'resetPassword(' + username + ')']);
+
+      const payload = new FormData();
+      payload.append('username', username);
+
+      const url = boiler.config.apiUrl + boiler.config.user.resetPasswordUrl;
+      log.debug('url', url);
+
+      return $http.post(url, payload, boiler.config.defaultHeader);
+    };
+
+    const updatePassword = (username, code, password) => {
+      log.setStack(boiler.enums.codeBlocks.service, ['api', 'updatePassword(' + username + ', ' + code + ', ' + password + ')']);
+
+      const payload = new FormData();
+      payload.append('username', username);
+      payload.append('code', code);
+      payload.append('password', password);
+
+      const url = boiler.config.apiUrl + boiler.config.user.updatePasswordUrl;
+      log.debug('url', url);
+
+      return $http.post(url, payload, boiler.config.defaultHeader);
+    };
+
     return {
       getPage,
       createUser,
@@ -119,6 +145,8 @@ angular.module('boiler')
       isDeckNameAvailable,
       getCardsByDeck,
       setSessionValue,
-      getSessionValue
+      getSessionValue,
+      resetPassword,
+      updatePassword
     };
   }]);

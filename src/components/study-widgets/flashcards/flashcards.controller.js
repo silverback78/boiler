@@ -18,4 +18,6 @@ angular.module('boiler')
       log.setStack(boiler.enums.codeBlocks.controller, ['flashcardsController', 'vm.onChooseNextCard()']);
       vm.cardFlipped = false;
     };
+
+    vm.childRegistered = true;
   }]);

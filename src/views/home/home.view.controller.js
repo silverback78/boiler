@@ -2,12 +2,13 @@
 
 angular.module('boiler')
 
-  .controller('homeViewController', ['$location', 'api', 'log', 'user', function($location, api, log, user) {
+  .controller('homeViewController', ['go', 'log', 'user', function(go, log, user) {
     log.setStack(boiler.enums.codeBlocks.controller, 'homeViewController');
 
     const vm = this;
     vm.currentUser = user;
     vm.debounce = boiler.config.input.debounce;
+    vm.go = go;
 
     vm.refreshPagers = () => {
       vm.child_deckPager.getPage();
