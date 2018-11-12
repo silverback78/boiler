@@ -1,0 +1,11 @@
+<boiler-container theme="dark" size="medium" padding="true">
+  <div layout="row" layout-xs="column" layout-align="center start">
+    <div flex style="width: 100%;">
+      <boiler-pager pager-id="userPager" page-size="10" title="Recent Users" api-url="users" show-pages="false" item-link="['users','username']" columns="['username']"></boiler-pager>
+    </div>
+    <div flex style="width: 100%;"></div>
+    <div flex style="width: 100%;">
+      <boiler-pager pager-id="deckPager" page-size="10" title="Recent Decks" api-url="decks" show-pages="false" item-link="['users','username','name','card-list']" columns="['name']"></boiler-pager>
+    </div>
+  </div>
+</boiler-container>

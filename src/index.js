@@ -3,6 +3,9 @@
 if(boiler.env === 'dev'){
   require('./boiler/dev/boiler.config.dev.js');
 }
+else if(boiler.env === 'stage'){
+  require('./boiler/stage/boiler.config.stage.js');
+}
 else {
   require('./boiler/prod/boiler.config.prod.js');
 }
@@ -40,7 +43,6 @@ require('../favicon.ico');
 require('./boiler/styles.css');
 
 /* Views */
-
 require('./views/users/users.view.controller.js');
 require('./views/users/users.view.template.html');
 require('./views/users/users.view.styles.css');
@@ -56,6 +58,9 @@ require('./views/how-it-works/how-it-works.view.styles.css');
 require('./views/demo/demo.view.controller.js');
 require('./views/demo/demo.view.template.html');
 require('./views/demo/demo.view.styles.css');
+
+require('./views/recent/recent.view.controller.js');
+require('./views/recent/recent.view.template.html');
 
 require('./views/study-widgets/study-widgets.view.controller.js');
 require('./views/study-widgets/study-widgets.view.template.html');

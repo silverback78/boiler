@@ -10,3 +10,6 @@ node_modules
 /.eslintrc.js
 boiler
 /.tmp.drivedownload
+stage
+piston
+rails

@@ -1,8 +1,6 @@
 'use strict';
 
 var api = function($http, $rootScope, $timeout, log, spinner) {
-  let spinnerDelay;
-
   const applyNextCycle = () => {
     $timeout(() => {
       $rootScope.$apply();
@@ -10,14 +8,15 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
   };
 
   const startSpinner = () => {
+    if (spinner.active) return;
     spinner.active = true;
-    spinnerDelay = $timeout(() => {
+    boiler.globals.spinnerDelay = $timeout(() => {
       spinner.visible = true;
     }, boiler.config.spinnerDelay);
   };
 
   const stopSpinner = () => {
-    $timeout.cancel(spinnerDelay);
+    $timeout.cancel(boiler.globals.spinnerDelay);
     spinner.active = false;
     spinner.visible = false;
   };
