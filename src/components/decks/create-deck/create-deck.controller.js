@@ -74,6 +74,7 @@ angular.module('boiler')
       vm.decks = createDeck.parse(vm.parseText.trim());
       vm.duplicateNames = [];
 
+      if (!vm.decks) return;
       log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.isDeckNameAvailable(vm.currentUser.username, item.name))']);
       Promise.all(
         vm.decks.map(

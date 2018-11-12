@@ -1,10 +1,27 @@
 <boiler-sequencer sequencer-id="createDeck" dialog="true" dialog-size="large" title="Create a Deck">
 
   <boiler-sequencer-step next-label="Generate" on-next="vm.generatePreview()">
-    <md-input-container class="md-block boiler-create-card-deck-text">
-      <label>Copy and Paste Deck</label>
-      <textarea class="boiler-create-deck-textarea" required ng-model="vm.parseText" rows="10" md-select-on-focus boiler-tab></textarea>
-    </md-input-container>
+    <div ng-show="!vm.showInstructions">
+      <a href="#" ng-click="vm.showInstructions = true" class="create-deck-instructions">Instructions</a>
+      <md-input-container class="md-block boiler-create-card-deck-text">
+        <label>Copy your deck and Paste here</label>
+        <textarea class="boiler-create-deck-textarea" required ng-model="vm.parseText" rows="10" md-select-on-focus boiler-tab></textarea>
+      </md-input-container>
+    </div>
+
+    <div ng-show="vm.showInstructions">
+      <a href="#" ng-click="vm.showInstructions = false" class="create-deck-instructions">Got it</a>
+      <div class="md-headline" md-colors="{color:'accent-900'}">Take your notes using this format:</div>
+      <em md-colors="{color:'background-500'}">You can use any editor, but OneNote works best. You can also type directly into the text box. Multiple tabs are ignored. Separate multiple decks by pressing enter twice.</em>
+      <p md-whiteframe="1" class="create-deck-format">
+          Physical Connections <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
+          USB 1 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> Low speeds of 1.5Mbps and full speeds of 12Mbps <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
+          USB 2 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> 480Mbps, maximum cable length of 5m <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
+          SATA 1 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> Maximum speeds of 1.5Gbps <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
+          SATA 2 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> Maximum speeds of 3Gbps <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span>
+      </p>
+    </div>
+
   </boiler-sequencer-step>
 
   <boiler-sequencer-step next-label="Looks Good" on-next="vm.save()">

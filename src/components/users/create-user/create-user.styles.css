@@ -29,3 +29,7 @@
 .boiler-create-user-dialog md-content {
   min-height: 230px;
 }
+
+.boiler-create-user-spinner {
+  margin-top: 45px;
+}

@@ -1,5 +1,5 @@
 .boiler-create-card-deck-text textarea {
-  max-height: 270px;
+  max-height: 240px;
   overflow: auto;
 }
 
@@ -68,3 +68,12 @@
   min-height: 300px !important;
 }
 
+.create-deck-format {
+  padding: 10px;
+}
+
+.create-deck-instructions {
+  position: absolute;
+  top: 23px;
+  right: 20px;
+}

@@ -1,13 +1,13 @@
   <boiler-sequencer sequencer-id="createUser" dialog="true" dialog-size="small" dialog-class="boiler-create-user-dialog" title="Create a User">
 
     <boiler-sequencer-step next-label="Let's do it">
-      <div layout-gt-sm="row">
+      <div layout="column">
         <div class="boiler-create-user-instructions">
           Start by choosing a username.
         </div>
       </div>
 
-      <div layout-gt-sm="row">
+      <div layout="column">
 
         <input required hidden name="nameAvailable" ng-model="vm.form.nameAvailable">
 
@@ -36,7 +36,7 @@
     </boiler-sequencer-step>
 
     <boiler-sequencer-step next-label="Set Password">
-      <div layout-gt-sm="row">
+      <div layout="column">
         <div class="boiler-create-user-instructions">
           Now set your password.
         </div>
@@ -65,13 +65,13 @@
     </boiler-sequencer-step>
 
     <boiler-sequencer-step next-label="Almost Done">
-      <div layout-gt-sm="row">
+      <div layout="column">
         <div class="boiler-create-user-instructions">
           Enter your e-mail address. Optional, and used only for password recovery.
         </div>
       </div>
 
-      <div layout-gt-sm="row">
+      <div layout="column">
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>E-mail address</label>
@@ -87,7 +87,7 @@
     </boiler-sequencer-step>
 
     <boiler-sequencer-step next-label="Make User" on-show="vm.setFormInvalid()" on-next="vm.save()">
-      <div layout-gt-sm="row">
+      <div layout="column">
         <div class="boiler-create-user-instructions">
           Gotta make sure you're not a robot. You're not a robot, are you?
         </div>
@@ -100,16 +100,24 @@
     </boiler-sequencer-step>
 
     <boiler-sequencer-step on-next="vm.getStarted()" next-label="Get Started">
-      <div layout-gt-sm="row">
-        <div class="boiler-create-user-instructions">
-          All set! Visit your account and start adding decks.
+      <div layout="column">
+        <div ng-if="vm.child_createUser.locked">
+          <div layout="row" layout-align="center center" class="boiler-create-user-spinner">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </div>
+    
+        <div ng-if="!vm.child_createUser.locked">
+          <div class="boiler-create-user-instructions">
+            All set! Visit your account and start adding decks.
+          </div>
+          <div class="boiler-create-user-done">
+            <i class="material-icons boiler-create-user-done-icon" md-colors="{color:'primary-900'}">sentiment_very_satisfied</i>
+          </div>
         </div>
       </div>
-
-      <div class="boiler-create-user-done">
-        <i class="material-icons boiler-create-user-done-icon" md-colors="{color:'primary-900'}">sentiment_very_satisfied</i>
-      </div>
     </boiler-sequencer-step>
+
   </div>
   </boiler-sequencer>
 

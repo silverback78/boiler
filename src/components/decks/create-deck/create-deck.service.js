@@ -74,6 +74,7 @@ angular.module('boiler')
           break;
         }
 
+        vm.rows[i] = vm.rows[i].replace(/\t\t+/g, '\t');
         let termDef = vm.rows[i].split(vm.options.tabDelimeter);
         let term = termDef[vm.options.oneRowKVP.termIndex];
         let definition = termDef[vm.options.oneRowKVP.definitionIndex]
@@ -158,6 +159,8 @@ angular.module('boiler')
       log.setStack(boiler.enums.codeBlocks.service, ['createDeck', 'parse' + parseText]);
 
       let rows = parseText.trim().split(boiler.config.parseDeck.newLineDelimeter);
+
+      if (!rows[boiler.config.parseDeck.firstCardIndex]) return;
 
       if (rows[boiler.config.parseDeck.firstCardIndex].match(boiler.config.parseDeck.tabDelimeter)) {
         return oneRowKVP(rows);
