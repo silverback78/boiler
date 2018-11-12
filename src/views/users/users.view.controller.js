@@ -1,18 +1,19 @@
 'use strict';
 
-angular.module('boiler')
+var usersViewController = function($routeParams, log, user) {
+  log.setStack(boiler.enums.codeBlocks.controller, 'usersViewController');
 
-  .controller('usersViewController', ['$routeParams', 'log', 'user', function($routeParams, log, user) {
-    log.setStack(boiler.enums.codeBlocks.controller, 'usersViewController');
+  const vm = this;
 
-    const vm = this;
+  vm.decks = [];
+  vm.currentUser = user;
+  vm.username = $routeParams.username;
+  vm.containerSize = boiler.config.container.large;
 
-    vm.decks = [];
-    vm.currentUser = user;
-    vm.username = $routeParams.username;
-    vm.containerSize = boiler.config.container.large;
+  vm.refreshDecks = () => {
+    vm.child_decksPager.getPage();
+  };
+};
 
-    vm.refreshDecks = () => {
-      vm.child_decksPager.getPage();
-    };
-  }]);
+usersViewController.$inject = ['$routeParams', 'log', 'user'];
+angular.module('boiler').controller('usersViewController', usersViewController);

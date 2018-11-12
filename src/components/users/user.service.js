@@ -1,18 +1,19 @@
 'use strict';
 
-angular.module('boiler')
+var user = function(log) {
+  log.setStack(boiler.enums.codeBlocks.service, ['user']);
 
-  .factory('user', ['log', (log) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['user']);
+  let authenticated, loaded, username, password, emailOnFile, email;
 
-    let authenticated, loaded, username, password, emailOnFile, email;
+  return {
+    authenticated,
+    loaded,
+    username,
+    password,
+    emailOnFile,
+    email
+  };
+};
 
-    return {
-      authenticated,
-      loaded,
-      username,
-      password,
-      emailOnFile,
-      email
-    };
-  }]);
+user.$inject = ['log'];
+angular.module('boiler').factory('user', user);

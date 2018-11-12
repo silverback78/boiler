@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('boiler')
+var spinner = function() {
+  let active;
+  let visible;
 
-  .factory('spinner', [() => {
+  return {
+    active,
+    visible
+  };
+};
 
-    let active;
-    let visible;
-
-    return {
-      active,
-      visible
-    };
-  }]);
+spinner.$inject = [];
+angular.module('boiler').factory('spinner', spinner);

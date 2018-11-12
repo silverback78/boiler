@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('boiler')
-  .controller('pageHeaderController', ['log', function(log) {
-    log.setStack(boiler.enums.codeBlocks.controller, 'pageHeaderController');
+var pageHeaderController = function(log) {
+  log.setStack(boiler.enums.codeBlocks.controller, 'pageHeaderController');
 
-    const vm = this;
-    vm.containerSize = boiler.config.container.large;
-  }]);
+  const vm = this;
+  vm.containerSize = boiler.config.container.large;
+};
+
+pageHeaderController.$inject = ['log'];
+angular.module('boiler').controller('pageHeaderController', pageHeaderController);

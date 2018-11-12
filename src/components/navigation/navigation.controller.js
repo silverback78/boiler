@@ -3,67 +3,68 @@
 
 'use strict';
 
-angular.module('boiler')
-  .controller('navigationController', ['$location', '$mdSidenav', '$scope', 'authentication', 'go', 'log', 'spinner', 'user', function($location, $mdSidenav, $scope, authentication, go, log, spinner, user) {
-    log.setStack(boiler.enums.codeBlocks.controller, 'navigationController');
+var navigationController = function($location, $mdSidenav, $scope, authentication, go, log, spinner, user) {
+  log.setStack(boiler.enums.codeBlocks.controller, 'navigationController');
 
-    const vm = this;
+  const vm = this;
 
-    vm.currentUser = user;
-    vm.go = go;
-    vm.navItems = [];
-    vm.location = $location;
-    vm.spinner = spinner;
+  vm.currentUser = user;
+  vm.go = go;
+  vm.navItems = [];
+  vm.location = $location;
+  vm.spinner = spinner;
 
-    vm.navItems.push({
-      name: '/home',
-      href: 'home',
-      label: 'Home'
-    });
+  vm.navItems.push({
+    name: '/home',
+    href: 'home',
+    label: 'Home'
+  });
 
-    vm.navItems.push({
-      name: '/how-it-works',
-      href: 'how-it-works',
-      label: 'How it Works'
-    });
+  vm.navItems.push({
+    name: '/how-it-works',
+    href: 'how-it-works',
+    label: 'How it Works'
+  });
 
-    $scope.$root.$on('$routeChangeSuccess', (e, current) => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', '$scope.$root.$on($routeChangeSuccess)']);
-      let startIndex = 0;
-      let invalid = Number.negativeOne;
-      let offset = Number.one;
+  $scope.$root.$on('$routeChangeSuccess', (e, current) => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', '$scope.$root.$on($routeChangeSuccess)']);
+    let startIndex = 0;
+    let invalid = Number.negativeOne;
+    let offset = Number.one;
 
-      let paramIndex = current.$$route.originalPath.indexOf(':');
-      let currentRoute = paramIndex === invalid
-        ? current.$$route.originalPath
-        : current.$$route.originalPath.substring(startIndex, paramIndex - offset);
+    let paramIndex = current.$$route.originalPath.indexOf(':');
+    let currentRoute = paramIndex === invalid
+      ? current.$$route.originalPath
+      : current.$$route.originalPath.substring(startIndex, paramIndex - offset);
 
-      $scope.currentNavItem = currentRoute;
-      vm.closeSidenav();
-    });
+    $scope.currentNavItem = currentRoute;
+    vm.closeSidenav();
+  });
 
-    vm.loadRoute = (route) => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.loadRoute(' + route + ')']);
-      $location.path(route);
-    };
+  vm.loadRoute = (route) => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.loadRoute(' + route + ')']);
+    $location.path(route);
+  };
 
-    vm.openSidenav = () => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.openSidenav()']);
-      $mdSidenav('right').open();
-    };
+  vm.openSidenav = () => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.openSidenav()']);
+    $mdSidenav('right').open();
+  };
 
-    vm.closeSidenav = () => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.closeSidenav()']);
-      $mdSidenav('right').close();
-    };
+  vm.closeSidenav = () => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.closeSidenav()']);
+    $mdSidenav('right').close();
+  };
 
-    vm.isSidenavOpen = () => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.isSidenavOpen()']);
-      return $mdSidenav('right').isOpen();
-    };
+  vm.isSidenavOpen = () => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['navigationController', 'vm.isSidenavOpen()']);
+    return $mdSidenav('right').isOpen();
+  };
 
-    vm.logout = () => {
-      authentication.logout();
-    };
+  vm.logout = () => {
+    authentication.logout();
+  };
+};
 
-  }]);
+navigationController.$inject = ['$location', '$mdSidenav', '$scope', 'authentication', 'go', 'log', 'spinner', 'user'];
+angular.module('boiler').controller('navigationController', navigationController);

@@ -1,33 +1,33 @@
 'use strict';
 
-angular.module('boiler')
+var stash = function(log) {
+  const storageSupported = () => {
+    return typeof(Storage) !== 'undefined';
+  };
 
-  .factory('stash', ['log', (log) => {
+  const get = (key) => {
+    if (!storageSupported()) return null;
 
-    const storageSupported = () => {
-      return typeof(Storage) !== 'undefined';
-    };
+    log.setStack(boiler.enums.codeBlocks.service, ['stash', 'get(' + key + ')']);
+    let value = localStorage.getItem(key);
+    value = angular.fromJson(value);
 
-    const get = (key) => {
-      if (!storageSupported()) return null;
+    return value;
+  };
 
-      log.setStack(boiler.enums.codeBlocks.service, ['stash', 'get(' + key + ')']);
-      let value = localStorage.getItem(key);
-      value = angular.fromJson(value);
+  const set = (key, value) => {
+    if (!storageSupported()) return;
 
-      return value;
-    };
+    value = angular.toJson(value);
+    log.setStack(boiler.enums.codeBlocks.service, ['stash', 'set(' + key + ', ' + value + ')']);
+    localStorage.setItem(key, value);
+  };
 
-    const set = (key, value) => {
-      if (!storageSupported()) return;
+  return {
+    get,
+    set
+  };
+};
 
-      value = angular.toJson(value);
-      log.setStack(boiler.enums.codeBlocks.service, ['stash', 'set(' + key + ', ' + value + ')']);
-      localStorage.setItem(key, value);
-    };
-
-    return {
-      get,
-      set
-    };
-  }]);
+stash.$inject = ['log'];
+angular.module('boiler').factory('stash', stash);

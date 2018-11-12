@@ -11,17 +11,18 @@ window.verifyRecaptcha = (response) => {
   reCaptcha.setReCaptchaResponse(response);
 };
 
-angular.module('boiler')
+var reCaptcha = function($rootScope, log) {
+  log.setStack(boiler.enums.codeBlocks.service, 'reCaptcha');
 
-  .factory('reCaptcha', ['$rootScope', 'log', ($rootScope, log) => {
-    log.setStack(boiler.enums.codeBlocks.service, 'reCaptcha');
+  const setReCaptchaResponse = (response) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['reCaptcha', 'setReCaptchaResponse(' + response + ')']);
+    $rootScope.$broadcast('reCaptchaResponse', response);
+  };
 
-    const setReCaptchaResponse = (response) => {
-      log.setStack(boiler.enums.codeBlocks.service, ['reCaptcha', 'setReCaptchaResponse(' + response + ')']);
-      $rootScope.$broadcast('reCaptchaResponse', response);
-    };
+  return {
+    setReCaptchaResponse
+  };
+};
 
-    return {
-      setReCaptchaResponse
-    };
-  }]);
+reCaptcha.$inject = ['$rootScope', 'log'];
+angular.module('boiler').factory('reCaptcha', reCaptcha);

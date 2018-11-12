@@ -9,7 +9,8 @@
   display: inline-block;
   background-image: linear-gradient(to right, rgba(118, 7, 108, 0) , rgba(118, 7, 108, 1));
   width: 90px;
-  height: 35px;
+  height: 40px;
   position: absolute;
+  top: 0;
   right: 0;
 }

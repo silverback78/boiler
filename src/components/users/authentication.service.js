@@ -1,82 +1,82 @@
 'use strict';
 
-angular.module('boiler')
+var authentication = function(api, log, user, usernameUrlFilter) {
+  const initialize = () => {
+    log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'initialize()']);
+    api.getSessionValue(boiler.config.users.sessionKey)
+      .then((response) => {
+        log.setStack(boiler.enums.codeBlocks.service, 'authentication');
+        log.debug('Getting user from session');
+        let data = response.data
+          ? angular.fromJson(response.data)
+          : {
+            authenticated: false,
+            username: '',
+            password: '',
+            email: '',
+            loaded: true
+          };
+        user.authenticated = data.authenticated;
+        user.username = usernameUrlFilter(data.username);
+        user.password = data.password;
+        user.email = data.email;
+        user.loaded = true;
+        log.debug('user', user);
+      });
+  };
 
-  .factory('authentication', ['api', 'log', 'user', 'usernameUrlFilter', (api, log, user, usernameUrlFilter) => {
+  const login = (username, password) => {
+    if (!username || !password) return;
+    log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')']);
 
-    const initialize = () => {
-      log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'initialize()']);
-      api.getSessionValue(boiler.config.users.sessionKey)
+    return new Promise((resolve) => {
+      api.authenticateUser(username, password)
         .then((response) => {
-          log.setStack(boiler.enums.codeBlocks.service, 'authentication');
-          log.debug('Getting user from session');
-          let data = response.data
-            ? angular.fromJson(response.data)
-            : {
-              authenticated: false,
-              username: '',
-              password: '',
-              email: '',
-              loaded: true
-            };
-          user.authenticated = data.authenticated;
+          const data = response.data;
+          log.debug('user', data);
+
           user.username = usernameUrlFilter(data.username);
-          user.password = data.password;
-          user.email = data.email;
+          user.password = password;
           user.loaded = true;
-          log.debug('user', user);
-        });
-    };
 
-    const login = (username, password) => {
-      if (!username || !password) return;
-      log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'login(' + username + ')']);
-
-      return new Promise((resolve) => {
-        api.authenticateUser(username, password)
-          .then((response) => {
-            const data = response.data;
-            log.debug('user', data);
-
-            user.username = usernameUrlFilter(data.username);
-            user.password = password;
-            user.loaded = true;
-
-            if (data.statusCode === boiler.config.apiSuccessCode) {
-              api.setSessionValue(boiler.config.users.sessionKey, angular.toJson({
-                authenticated: true,
-                username: data.username,
-                password: password,
-                email: data.email,
-                loaded: true
-              }));
-              user.authenticated = true;
+          if (data.statusCode === boiler.config.apiSuccessCode) {
+            api.setSessionValue(boiler.config.users.sessionKey, angular.toJson({
+              authenticated: true,
+              username: data.username,
+              password: password,
+              email: data.email,
+              loaded: true
+            }));
+            user.authenticated = true;
+          }
+          else {
+            user.authenticated = false;
+            if (data.referenceCode === boiler.config.user.emailOnFileErrorCode) {
+              user.emailOnFile = true;
             }
             else {
-              user.authenticated = false;
-              if (data.referenceCode === boiler.config.user.emailOnFileErrorCode) {
-                user.emailOnFile = true;
-              }
-              else {
-                user.emailOnFile = false;
-              }
+              user.emailOnFile = false;
             }
+          }
 
-            resolve(user);
-          });
-      });
-    };
+          resolve(user);
+        });
+    });
+  };
 
-    const logout = () => {
-      api.setSessionValue(boiler.config.users.sessionKey, '');
-      user.authenticated = false;
-      user.username = null;
-      user.password = null;
-    };
+  const logout = () => {
+    api.setSessionValue(boiler.config.users.sessionKey, '');
+    user.authenticated = false;
+    user.username = null;
+    user.password = null;
+  };
 
-    return {
-      initialize,
-      login,
-      logout
-    };
-  }]);
+  return {
+    initialize,
+    login,
+    logout
+  };
+};
+
+authentication.$inject = ['api', 'log', 'user', 'usernameUrlFilter'];
+angular.module('boiler').factory('authentication', authentication);

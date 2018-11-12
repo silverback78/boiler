@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('boiler')
-  .controller('selectWidgetController', ['$routeParams', 'go', 'log', function($routeParams, go, log) {
-    log.setStack(boiler.enums.codeBlocks.controller, 'selectWidgetController');
+var selectWidgetController = function($routeParams, go, log) {
+  log.setStack(boiler.enums.codeBlocks.controller, 'selectWidgetController');
 
-    const vm = this;
+  const vm = this;
 
-    vm.username = $routeParams.username;
-    vm.deck = $routeParams.deck;
-    vm.go = go;
-  }]);
+  vm.username = $routeParams.username;
+  vm.deck = $routeParams.deck;
+  vm.go = go;
+};
+
+selectWidgetController.$inject = ['$routeParams', 'go', 'log'];
+angular.module('boiler').controller('selectWidgetController', selectWidgetController);

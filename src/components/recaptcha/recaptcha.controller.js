@@ -4,29 +4,31 @@
 
 'use strict';
 
-angular.module('boiler')
-  .controller('recaptchaController', ['$scope', '$timeout', 'log', function($scope, $timeout, log) {
-    log.setStack(boiler.enums.codeBlocks.controller, 'recaptchaController');
+var recaptchaController = function($scope, $timeout, log) {
+  log.setStack(boiler.enums.codeBlocks.controller, 'recaptchaController');
 
-    const vm = this;
-    vm.reCaptchaResponse;
+  const vm = this;
+  vm.reCaptchaResponse;
 
-    $timeout(() => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['recaptchaController', '$timeout()']);
-      log.setStack(boiler.enums.codeBlocks.controller, ['recaptchaController', 'grecaptcha.render(\'recaptcha\')']);
-      grecaptcha.render( 'recaptcha', {
-        'sitekey' : boiler.config.recaptcha.sitekey,
-        'theme' : 'light',
-        'callback': 'verifyRecaptcha'
-      });
+  $timeout(() => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['recaptchaController', '$timeout()']);
+    log.setStack(boiler.enums.codeBlocks.controller, ['recaptchaController', 'grecaptcha.render(\'recaptcha\')']);
+    grecaptcha.render( 'recaptcha', {
+      'sitekey' : boiler.config.recaptcha.sitekey,
+      'theme' : 'light',
+      'callback': 'verifyRecaptcha'
     });
+  });
 
-    $scope.$on('reCaptchaResponse', (event, data) => {
-      log.setStack(boiler.enums.codeBlocks.controller, ['recaptchaController', '$scope.$on(\'reCaptchaResponse\')']);
-      log.debug('data', data);
-      if (vm.parentVm && data) {
-        vm.parentVm.reCaptchaResponse = data;
-        $scope.$apply();
-      }
-    });
-  }]);
+  $scope.$on('reCaptchaResponse', (event, data) => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['recaptchaController', '$scope.$on(\'reCaptchaResponse\')']);
+    log.debug('data', data);
+    if (vm.parentVm && data) {
+      vm.parentVm.reCaptchaResponse = data;
+      $scope.$apply();
+    }
+  });
+};
+
+recaptchaController.$inject = ['$scope', '$timeout', 'log'];
+angular.module('boiler').controller('recaptchaController', recaptchaController);

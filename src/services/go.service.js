@@ -1,35 +1,35 @@
 'use strict';
 
-angular.module('boiler')
+var go = function($location, log, usernameUrlFilter) {
+  const home = () => {
+    log.setStack(boiler.enums.codeBlocks.service, ['go', 'home()']);
+    $location.path('/');
+  };
 
-  .factory('go', ['$location', 'log', 'usernameUrlFilter', ($location, log, usernameUrlFilter) => {
+  const toUser = (user) => {
+    user = usernameUrlFilter(user);
+    log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ')']);
+    $location.path('users/' + user);
 
-    const home = () => {
-      log.setStack(boiler.enums.codeBlocks.service, ['go', 'home()']);
-      $location.path('/');
-    };
+  };
 
-    const toUser = (user) => {
-      user = usernameUrlFilter(user);
-      log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ')']);
-      $location.path('users/' + user);
+  const toWidget = (user, deck, widget) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ', ' + deck + ', ' + widget + ')']);
+    $location.path('users/' + user + '/' + deck + '/' + widget);
+  };
 
-    };
+  const toHowItWorks = () => {
+    log.setStack(boiler.enums.codeBlocks.service, ['go', 'toHowItWorks()']);
+    $location.path('how-it-works');
+  };
 
-    const toWidget = (user, deck, widget) => {
-      log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ', ' + deck + ', ' + widget + ')']);
-      $location.path('users/' + user + '/' + deck + '/' + widget);
-    };
+  return {
+    home,
+    toUser,
+    toHowItWorks,
+    toWidget
+  };
+};
 
-    const toHowItWorks = () => {
-      log.setStack(boiler.enums.codeBlocks.service, ['go', 'toHowItWorks()']);
-      $location.path('how-it-works');
-    };
-
-    return {
-      home,
-      toUser,
-      toHowItWorks,
-      toWidget
-    };
-  }]);
+go.$inject = ['$location', 'log', 'usernameUrlFilter'];
+angular.module('boiler').factory('go', go);
