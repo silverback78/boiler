@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('boiler')
-  .controller('loginController', ['$scope', 'api', 'authentication', 'go', 'log', 'spinner', 'user', function($scope, api, authentication, go, log, spinner, user) {
+  .controller('loginController', ['$scope', 'api', 'authentication', 'go', 'log', 'user', function($scope, api, authentication, go, log, user) {
     log.setStack(boiler.enums.codeBlocks.controller, 'loginController');
 
     const vm = this;
@@ -9,17 +9,16 @@ angular.module('boiler')
     vm.go = go;
     vm.state = {};
     vm.state = boiler.config.user.login.states.initial;
-    vm.spinner = spinner;
 
     vm.newUser = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'newUser()']);
       vm.child_createUser.showCreateUser();
     };
 
     vm.login = () => {
-      vm.spinner.active = true;
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'login()']);
       authentication.login(vm.username, vm.password)
         .then((user) => {
-          vm.spinner.active = false;
           if (user.authenticated) {
             vm.child_loginToast.showToast();
           }
@@ -36,40 +35,33 @@ angular.module('boiler')
     };
 
     vm.toastContent = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'toastContent()']);
       return 'Logged in as ' + vm.currentUser.username;
     };
 
     vm.logout = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'logout()']);
       authentication.logout();
     };
 
     vm.resetPassword = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'resetPassword()']);
       vm.code = String.empty;
       vm.newPassword = String.empty;
       vm.verifyPassword = String.empty;
-      vm.spinner.active = true;
 
-      log.setStack(boiler.enums.codeBlocks.service, ['resetPassword', 'api.resetPassword(' + vm.username + ')']);
       api.resetPassword(vm.username)
         .then((response) => {
-          vm.spinner.active = false;
-          log.setStack(boiler.enums.codeBlocks.service, ['resetPassword', 'api.resetPassword(' + vm.username + ').then()']);
-          log.debug('response.data', response.data);
           vm.email = response.data.email;
           vm.state = boiler.config.user.login.states.resetPassword;
         });
     };
 
     vm.updatePassword = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'updatePassword()']);
       if (vm.resetPasswordForm.$invalid) return;
-      vm.spinner.active = true;
-      log.setStack(boiler.enums.codeBlocks.service, ['updatePassword', 'api.updatePassword(' + vm.username + ', ' + vm.code + ', ' + vm.newPassword + ')']);
       api.updatePassword(vm.username, vm.code, vm.newPassword)
         .then((response) => {
-          vm.spinner.active = false;
-          log.setStack(boiler.enums.codeBlocks.service, ['updatePassword', 'api.updatePassword(' + vm.username + ', ' + vm.code + ', ' + vm.newPassword + ').then()']);
-          log.debug('response.data', response.data);
-
           if (response.data.statusCode === boiler.config.errorStatus) {
             switch(response.data.referenceCode) {
             case boiler.config.user.invalidRecoveryCode:
@@ -87,12 +79,14 @@ angular.module('boiler')
     };
 
     vm.tryAgain = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'tryAgain()']);
       vm.username = String.empty;
       vm.password = String.empty;
       vm.state = boiler.config.user.login.states.initial;
     };
 
     vm.tryResetAgain = () => {
+      log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'tryResetAgain()']);
       vm.username = String.empty;
       vm.password = String.empty;
       vm.state = boiler.config.user.login.states.resetPassword;

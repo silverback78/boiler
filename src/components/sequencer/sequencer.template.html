@@ -27,9 +27,9 @@
     </pane-content>
 
     <pane-buttons>
-      <md-button class="md-raised" ng-click="vm.back()" ng-disabled="(vm.step === 0) || (vm.step >= vm.steps.length - 1)">{{vm.steps[vm.step].backLabel || 'Back'}}</md-button>
-      <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.next()" ng-if="vm.step < vm.steps.length - 1" ng-disabled="vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Next'}}</md-button>
-      <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.finish()" ng-if="vm.step >= vm.steps.length - 1" ng-disabled="vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Finish'}}</md-button>
+      <md-button class="md-raised" ng-click="vm.back()" ng-disabled="vm.spinner.active || (vm.step === 0) || (vm.step >= vm.steps.length - 1)">{{vm.steps[vm.step].backLabel || 'Back'}}</md-button>
+      <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.next()" ng-if="vm.step < vm.steps.length - 1" ng-disabled="vm.spinner.active || vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Next'}}</md-button>
+      <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.finish()" ng-if="vm.step >= vm.steps.length - 1" ng-disabled="vm.spinner.active || vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Finish'}}</md-button>
     </pane-buttons>
 
   </boiler-dialog>

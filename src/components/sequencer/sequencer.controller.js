@@ -2,7 +2,7 @@
 
 angular.module('boiler')
 
-  .controller('sequencerController', ['log', function(log) {
+  .controller('sequencerController', ['log', 'spinner', function(log, spinner) {
     log.setStack(boiler.enums.codeBlocks.controller, 'sequencerController');
 
     const vm = this;
@@ -13,6 +13,7 @@ angular.module('boiler')
     vm.firstStep = 0;
     vm.lastStep = vm.steps.length;
     vm.dialogForm = String.empty;
+    vm.spinner = spinner;
 
     vm.showSequencer = () => {
       log.setStack(boiler.enums.codeBlocks.controller, ['sequencerController', 'vm.showSequencer()']);

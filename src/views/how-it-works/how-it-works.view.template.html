@@ -3,43 +3,83 @@
 </boiler-page-header>
 
 <boiler-container padding="true" class="how-it-works">
-    <p>
-      <span class="md-headline" md-colors="{color:'primary-900'}">StudyWidgets</span> works with your notes. You create decks of cards by typing your notes, copying and then pasting into the new deck form.
-    </p>
-    <p>
-      You must use a format that StudyWidgets understands. The easiest is a format that works well with Microsoft OneNote (but can also be used in a text editor of your choice). Both Windows Store and Web versions of OneNote are <em>free</em>.
-      <ol>
-        <li>Type your title, <strong>press enter</strong></li>
-        <li>Type the first term, <strong>press tab</strong></li>
-        <li>Type the definition, <strong>press enter</strong></li>
-      </ol>
-    </p>
-    <p>
-      The results in OneNote create a table for you automatically. You can create multiple decks simultaneously, just separate decks by pressing enter.
-    </p>
-    <div layout="column" layout-align="center center" class="gutter-top">
-      <span class="md-headline" md-colors="{color:'primary-900'}">Type your notes</span>
-      <img src="./src/images/one-note-example.png" alt="OneNote example">
-    </div>
+  <md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="study">
+      <md-content class="md-padding">
+        <h1 class="md-display-2">Study</h1>
+        <p>With <span class="md-headline" md-colors="{color:'primary-900'}">StudyWidgets</span> you simply create a deck and then choose how you want to study.</p>
+        <p>You can study the <strong md-colors="{color:'primary-900'}">entire deck at once</strong>, flip through <strong md-colors="{color:'primary-900'}">flashcards</strong>, or answer <strong md-colors="{color:'primary-900'}">multiple choice</strong> questions.</p>
+        <p>Each widget has a progress indicator. When you get a card right, the progress moves forward. When you get a card wrong, it moves backwards. Be careful, the bar moves backwards more quickly than it moves forward.</p>
+        <p><strong md-colors="{color:'primary-900'}">When you get a card wrong, you will see that card more frequently</strong> in the current study session.</p>
+        <p>At the end of the study session, you will have the option to <strong md-colors="{color:'primary-900'}">study only the cards you missed</strong> during that session.</p>
 
-    <hr>
+        <hr>
+    
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">When you get a card right, the progress moves forward.</span>
+          <img src="./src/images/study-card-correct.png" alt="Card correct">
+        </div>
 
-    <div layout="column" layout-align="center center" class="gutter-top">
-      <span class="md-headline" md-colors="{color:'primary-900'}">Select the deck(s) you wish to create</span>
-      <img src="./src/images/one-note-select-example.png" alt="OneNote example">
-    </div>
+        <hr>
+    
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">When you miss a card, the progress moves backwards.</span>
+          <img src="./src/images/study-card-missed.png" alt="Card missed">
+        </div>
 
-    <hr>
+        <hr>
+    
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">When you are done you can study only missed cards.</span>
+          <img src="./src/images/study-missed-cards.png" alt="Study missed cards only">
+        </div>
 
-    <div layout="column" layout-align="center center" class="gutter-top">
-      <span class="md-headline" md-colors="{color:'primary-900'}">Copy</span>
-      <img src="./src/images/one-note-copy-example.png" alt="OneNote example">
-    </div>
+      </md-content>
+    </md-tab>
+    <md-tab label="Create a Deck">
+      <md-content class="md-padding">
+        <h1 class="md-display-2">Create a Deck</h1>
 
-    <hr>
-
-    <div layout="column" layout-align="center center" class="gutter-top">
-      <span class="md-headline" md-colors="{color:'primary-900'}">Paste</span>
-      <img src="./src/images/one-note-paste-example.png" alt="OneNote example">
-    </div>
+        <p>
+          <span class="md-headline" md-colors="{color:'primary-900'}">StudyWidgets</span> works with your notes. You create decks of cards by typing your notes, copying and then pasting into the new deck form.
+        </p>
+        <p>
+          You must use a format that StudyWidgets understands. The easiest is a format that works well with Microsoft OneNote (but can also be used in a text editor of your choice). Both Windows Store and Web versions of OneNote are <em>free</em>.
+          <ol>
+            <li>Type your title, <strong>press enter</strong></li>
+            <li>Type the first term, <strong>press tab</strong></li>
+            <li>Type the definition, <strong>press enter</strong></li>
+          </ol>
+        </p>
+        <p>
+          The results in OneNote create a table for you automatically. You can create multiple decks simultaneously, just separate decks by pressing enter.
+        </p>
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">Type your notes</span>
+          <img src="./src/images/one-note-example.png" alt="OneNote example">
+        </div>
+    
+        <hr>
+    
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">Select the deck(s) you wish to create</span>
+          <img src="./src/images/one-note-select-example.png" alt="OneNote example">
+        </div>
+    
+        <hr>
+    
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">Copy</span>
+          <img src="./src/images/one-note-copy-example.png" alt="OneNote example">
+        </div>
+    
+        <hr>
+    
+        <div layout="column" layout-align="center center" class="gutter-top">
+          <span class="md-headline" md-colors="{color:'primary-900'}">Paste</span>
+          <img src="./src/images/one-note-paste-example.png" alt="OneNote example">
+        </div>
+      </md-content>
+    </md-tab>
+  </md-tabs>
 </boiler-container>

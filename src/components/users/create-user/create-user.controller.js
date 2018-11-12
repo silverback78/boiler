@@ -19,6 +19,7 @@ angular.module('boiler')
     vm.debounce = boiler.config.input.debounce;
     vm.saveError = false;
     vm.currentUser = user;
+    vm.creatingUser = false;
 
     vm.showCreateUser = () => {
       log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'vm.showCreateUser()']);
@@ -40,11 +41,8 @@ angular.module('boiler')
       vm.checkingName = String.empty;
       if (vm.form.username) {
         vm.checkingName = boiler.config.input.asyncState.checking;
-        log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'api.isUsernameAvailable(' + vm.form.username + ')']);
         api.isUsernameAvailable(vm.form.username)
           .then((response) => {
-            log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'api.isUsernameAvailable(' + vm.form.username + ').then()']);
-            log.debug('response', response);
             let available = response.data;
             if (available) {
               vm.checkingName = boiler.config.input.asyncState.available;
@@ -54,10 +52,6 @@ angular.module('boiler')
               vm.checkingName = boiler.config.input.asyncState.unavailable;
               vm.form.nameAvailable = String.empty;
             }
-          })
-          .catch(() => {
-            log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'api.isUsernameAvailable(' + vm.form.username + ').catch()']);
-            log.error(boiler.config.verbiage.defaultCatchMessage);
           });
       }
     };
@@ -66,11 +60,10 @@ angular.module('boiler')
 
     vm.save = () => {
       log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'vm.save()']);
-      log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'api.createUser(' + vm.form.username + ', ' + vm.form.password + ', ' + vm.form.email + ', ' + vm.reCaptchaResponse + ')']);
+      vm.creatingUser = true;
       api.createUser(vm.form.username, vm.form.password, vm.form.email, vm.reCaptchaResponse)
         .then((response) => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'api.createUser(' + vm.form.username + ', ' + vm.form.password + ', ' + vm.form.email + ', ' + vm.reCaptchaResponse + ').then()']);
-          log.debug('response', response);
+          vm.creatingUser = false;
           const data = response.data;
 
           if (data.statusCode === boiler.config.errorStatus) {
@@ -100,10 +93,6 @@ angular.module('boiler')
           if (angular.isFunction(vm.onSave)) {
             vm.onSave();
           }
-        })
-        .catch(() => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['createUserController', 'api.createUser(' + vm.form.username + ', ' + vm.form.password + ', ' + vm.form.email + ', ' + vm.reCaptchaResponse + ').catch()']);
-          log.error(boiler.config.verbiage.defaultCatchMessage);
         });
     };
   }]);

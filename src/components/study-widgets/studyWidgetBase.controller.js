@@ -54,15 +54,9 @@ angular.module('boiler')
         api.getCardsByDeck(vm.username, vm.deck)
           .then((response) => {
             log.debug('Getting cards from server.');
-            log.setStack(boiler.enums.codeBlocks.controller, ['studyWidgetBaseController', 'api.initializeByDeck(' + vm.username + ', ' + vm.deck + ').then()']);
-            log.debug('response', response);
             vm.originalCards = response.data.page.items;
             stash.set(vm.username + vm.deck, vm.originalCards);
             vm.studyAll();
-          })
-          .catch(() => {
-            log.setStack(boiler.enums.codeBlocks.controller, 'studyWidgetBaseController', 'api.initializeByDeck(' + vm.username + ', ' + vm.deck +').catch()');
-            log.error(boiler.config.verbiage.defaultCatchMessage);
           });
       }
     };

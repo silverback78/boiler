@@ -26,22 +26,14 @@ angular.module('boiler')
       log.setStack(boiler.enums.codeBlocks.controller, ['pagerController', 'vm.getPage()']);
       log.debug('vm.apiUrl', vm.apiUrl);
 
-      log.setStack(boiler.enums.codeBlocks.controller, ['pagerController', 'vm.getPage()', 'api.getPage(' + vm.apiUrl + ')']);
       const url = vm.apiUrl + '/' + vm.currentIndex + '/' + vm.pagerPageSize + '/' + vm.pagerOrderBy + '/' + vm.pagerOrder;
       api.getPage(url)
         .then(
           (response) => {
-            log.setStack(boiler.enums.codeBlocks.controller, ['pagerController', 'vm.getPage()', 'api.getPage(' + url + ').then()']);
-            log.debug('response', response);
-
             vm.data = response.data;
             vm.loaded = true;
           }
-        )
-        .catch(() => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['pagerController', 'vm.getPage()', 'api.getPage(' + vm.apiUrl + ').catch()']);
-          log.error(boiler.config.verbiage.defaultCatchMessage);
-        });
+        );
     };
 
     vm.selectPage = (page) => {

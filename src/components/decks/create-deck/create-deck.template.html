@@ -51,12 +51,20 @@
     </div>
   </boiler-sequencer-step>
 
-  <boiler-sequencer-step next-label="Sweet">
-    <div class="boiler-create-deck-message">
-      Done and done. Check out your new deck.
+  <boiler-sequencer-step next-label="Sweet" on-show="vm.watchSpinner()">
+    <div ng-if="vm.processingDeck">
+      <div layout="row" layout-align="center center" class="boiler-create-deck-spinner">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
     </div>
-    <div class="boiler-create-deck-icon-container">
-      <i class="material-icons boiler-create-deck-icon" md-colors="{color:'primary-900'}">thumb_up</i>
+
+    <div ng-if="!vm.processingDeck">
+      <div class="boiler-create-deck-message">
+        Done and done. Check out your new deck.
+      </div>
+      <div class="boiler-create-deck-icon-container">
+        <i class="material-icons boiler-create-deck-icon" md-colors="{color:'primary-900'}">thumb_up</i>
+      </div>
     </div>
   </boiler-sequencer-step>
 

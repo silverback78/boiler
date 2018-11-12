@@ -2,7 +2,68 @@
 
 angular.module('boiler')
 
-  .factory('api', ['$http', 'log', ($http, log) => {
+  .factory('api', ['$http', '$rootScope', '$timeout', 'log', 'spinner', ($http, $rootScope, $timeout, log, spinner) => {
+
+    let spinnerDelay;
+
+    const applyNextCycle = () => {
+      $timeout(() => {
+        $rootScope.$apply();
+      }, Number.zero);
+    };
+
+    const startSpinner = () => {
+      spinner.active = true;
+      spinnerDelay = $timeout(() => {
+        spinner.visible = true;
+      }, boiler.config.spinnerDelay);
+    };
+
+    const stopSpinner = () => {
+      $timeout.cancel(spinnerDelay);
+      spinner.active = false;
+      spinner.visible = false;
+    };
+
+    const httpGet = (url) => {
+      return new Promise((resolve, reject) => {
+        startSpinner();
+        $http.get(url)
+          .then((response) => {
+            log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').then()']);
+            log.debug('response', response);
+            stopSpinner();
+            resolve(response);
+            applyNextCycle();
+          })
+          .catch((e) => {
+            reject(e);
+            log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').catch()']);
+            log.error(boiler.config.verbiage.defaultCatchMessage);
+            log.debug('e', e);
+          });
+      });
+    };
+
+    const httpPost = (url, payload) => {
+      return new Promise((resolve, reject) => {
+        startSpinner();
+        $http.post(url, payload, boiler.config.defaultHeader)
+          .then((response) => {
+            log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpPost(' + url + ').then()']);
+            log.debug('response', response);
+            stopSpinner();
+            resolve(response);
+            applyNextCycle();
+          })
+          .catch((e) => {
+            reject(e);
+            log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').catch()']);
+            log.error(boiler.config.verbiage.defaultCatchMessage);
+            log.debug('e', e);
+          });
+      });
+    };
 
     const getPage = (params) => {
       log.setStack(boiler.enums.codeBlocks.service, ['api', 'getPage(' + params + ')']);
@@ -10,7 +71,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + params;
       log.debug('url', url);
 
-      return $http.get(url);
+      return httpGet(url);
     };
 
     const createUser = (username, password, email, reCaptchaResponse) => {
@@ -25,7 +86,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.user.apiUrl;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
     };
 
     const isUsernameAvailable = (username) => {
@@ -34,7 +95,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.user.checkNameUrl + username;
       log.debug('url', url);
 
-      return $http.get(url);
+      return httpGet(url);
     };
 
     const isDeckNameAvailable = (username, deckName) => {
@@ -47,7 +108,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.deck.checkNameUrl;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
     };
 
     const authenticateUser = (username, password) => {
@@ -60,7 +121,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.user.authenticateUrl;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
     };
 
     const createDeck = (username, password, deckName, description, cards) => {
@@ -76,7 +137,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.deck.apiUrl;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
     };
 
     const getCardsByDeck = (username, deckName) => {
@@ -85,7 +146,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.cards.apiUrl + username + '/' + deckName + '/' + boiler.config.pager.getAll;
       log.debug('url', url);
 
-      return $http.get(url);
+      return httpGet(url);
     };
 
     const setSessionValue = (key, value) => {
@@ -98,7 +159,7 @@ angular.module('boiler')
       const url = boiler.config.sessionUrl + boiler.config.session.setApi;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
     };
 
     const getSessionValue = (key) => {
@@ -107,7 +168,7 @@ angular.module('boiler')
       const url = boiler.config.sessionUrl + boiler.config.session.getApi + key;
       log.debug('url', url);
 
-      return $http.get(url);
+      return httpGet(url);
     };
 
     const resetPassword = (username) => {
@@ -119,7 +180,7 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.user.resetPasswordUrl;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
     };
 
     const updatePassword = (username, code, password) => {
@@ -133,10 +194,20 @@ angular.module('boiler')
       const url = boiler.config.apiUrl + boiler.config.user.updatePasswordUrl;
       log.debug('url', url);
 
-      return $http.post(url, payload, boiler.config.defaultHeader);
+      return httpPost(url, payload);
+    };
+
+    const delay = (time) => {
+      log.setStack(boiler.enums.codeBlocks.service, ['api', 'delay(' + time + ')']);
+
+      const url = boiler.config.apiUrl + boiler.config.delayUrl + time;
+      log.debug('url', url);
+
+      return httpGet(url);
     };
 
     return {
+      delay,
       getPage,
       createUser,
       isUsernameAvailable,

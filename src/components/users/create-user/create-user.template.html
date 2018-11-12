@@ -101,13 +101,13 @@
 
     <boiler-sequencer-step on-next="vm.getStarted()" next-label="Get Started">
       <div layout="column">
-        <div ng-if="vm.child_createUser.locked">
+        <div ng-if="vm.creatingUser">
           <div layout="row" layout-align="center center" class="boiler-create-user-spinner">
             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
           </div>
         </div>
     
-        <div ng-if="!vm.child_createUser.locked">
+        <div ng-if="!vm.creatingUser">
           <div class="boiler-create-user-instructions">
             All set! Visit your account and start adding decks.
           </div>

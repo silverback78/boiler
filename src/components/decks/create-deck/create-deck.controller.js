@@ -17,6 +17,7 @@ angular.module('boiler')
     vm.checkingPassword = String.empty;
     vm.authenticated = String.empty;
     vm.errors = [];
+    vm.processingDeck = false;
 
     vm.showCreateDeck = () => {
       vm.child_createDeck.showSequencer();
@@ -25,14 +26,13 @@ angular.module('boiler')
     vm.save = () => {
       vm.errors = [];
       log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'vm.save()']);
-
+      vm.processingDeck = true;
       Promise.all(
         vm.decks.map(
           deck => api.createDeck(vm.currentUser.username, vm.currentUser.password, deck.name, deck.description, deck.cards)
             .then((response) => {
-              log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.createDeck(' + vm.currentUser.username + ', ' + vm.currentUser.password + ', ' + deck.name + ', ' + deck.description, deck.cards + '))']);
-              log.debug ('response', response);
-              log.debug('Clearning stash for ' + vm.currentUser.username + ' ' + deck.name);
+              vm.processingDeck = false;
+              log.debug('Clearing stash for ' + vm.currentUser.username + ' ' + deck.name);
               stash.set(vm.currentUser.username + deck.name, null);
               if (response.data.statusCode === boiler.config.errorStatus) {
                 vm.errors.push({
@@ -55,12 +55,6 @@ angular.module('boiler')
             vm.onSave();
           }
 
-        }).catch(() => {
-          vm.errors.push({
-            deck: 'Error',
-            error: 'An unknown error has occurred. Please try again later.'
-          });
-          vm.error();
         });
     };
 
@@ -75,23 +69,16 @@ angular.module('boiler')
       vm.duplicateNames = [];
 
       if (!vm.decks) return;
-      log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.isDeckNameAvailable(vm.currentUser.username, item.name))']);
       Promise.all(
         vm.decks.map(
           item => api.isDeckNameAvailable(vm.currentUser.username, item.name)
             .then((response) => {
-              log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.isDeckNameAvailable(vm.currentUser.username, item.name)).then()']);
-              log.debug('response', response);
               if (!response.data) {
                 vm.duplicateNames.push(item.name);
               }
             })
         )
-      )
-        .catch(() => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'Promise.all(=> api.isDeckNameAvailable(vm.currentUser.username, item.name)).catch()']);
-          log.error(boiler.config.verbiage.defaultCatchMessage);
-        });
+      );
     };
 
     vm.getColSize = (definition) => {
