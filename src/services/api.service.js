@@ -193,17 +193,7 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     return httpPost(url, payload);
   };
 
-  const delay = (time) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'delay(' + time + ')']);
-
-    const url = boiler.config.apiUrl + boiler.config.delayUrl + time;
-    log.debug('url', url);
-
-    return httpGet(url);
-  };
-
   return {
-    delay,
     getPage,
     createUser,
     isUsernameAvailable,
