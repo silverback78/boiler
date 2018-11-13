@@ -1,14 +1,6 @@
 'use strict';
 
-if(boiler.env === 'dev'){
-  require('./boiler/dev/boiler.config.dev.js');
-}
-else if(boiler.env === 'stage'){
-  require('./boiler/stage/boiler.config.stage.js');
-}
-else {
-  require('./boiler/prod/boiler.config.prod.js');
-}
+require('./boiler/boiler.config.js');
 
 const importAll = (r) => {
   return r.keys().map(r);
