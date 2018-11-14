@@ -6,8 +6,7 @@
 /**
  * Summary.     Factory for logging information.
  *
- * Description. The log factory should log to the console in the development environment, and to the database
- *              in production environment. It should utilize colors when available and coherently display the
+ * Description. The log factory should utilize colors when available and coherently display the
  *              current stack, comment, and any objects associated with the log.
  *
  *              Because logging is frequently run, in many areas code readability was sacrificed for speed.
@@ -74,7 +73,7 @@ var log = function($log) {
   let stack = String.empty;
 
   let setStack = (codeBlockParam, stackParam) => {
-    let logsDisabled = boiler.env !== boiler.enums.env.dev || !boiler.config.features.log.enabled;
+    let logsDisabled = !boiler.config.features.log.enabled;
     let validCodeBlock = boiler.config.features.log.styles.hasOwnProperty(codeBlockParam);
 
     if (logsDisabled) return {};
