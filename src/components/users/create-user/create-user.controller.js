@@ -12,6 +12,7 @@ var createUserController = function($scope, api, authentication, go, log, user) 
   vm.form.email = String.empty;
   vm.reCaptchaResponse = String.empty;
   vm.form.nameAvailable = String.empty;
+  vm.captchaEnabled = boiler.config.features.captcha.enabled;
 
   vm.checkingName = String.empty;
   vm.debounce = boiler.config.input.debounce;

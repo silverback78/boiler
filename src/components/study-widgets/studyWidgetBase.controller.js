@@ -50,10 +50,10 @@ var studyWidgetBaseController = function($routeParams, $scope, api, log, stash, 
       vm.studyAll();
     }
     else {
-      api.getCardsByDeck(vm.username, vm.deck)
+      api.getCards(vm.username, vm.deck)
         .then((response) => {
           log.debug('Getting cards from server.');
-          vm.originalCards = response.data.page.items;
+          vm.originalCards = response.data.cards;
           stash.set(vm.username + vm.deck, vm.originalCards);
           vm.studyAll();
         });

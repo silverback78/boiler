@@ -52,7 +52,7 @@ var loginController = function($scope, api, authentication, go, log, user) {
 
     api.resetPassword(vm.username)
       .then((response) => {
-        vm.email = response.data.email;
+        vm.email = response.data.obfuscatedEmail;
         vm.state = boiler.config.user.login.states.resetPassword;
       });
   };
@@ -60,7 +60,7 @@ var loginController = function($scope, api, authentication, go, log, user) {
   vm.updatePassword = () => {
     log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'updatePassword()']);
     if (vm.resetPasswordForm.$invalid) return;
-    api.updatePassword(vm.username, vm.code, vm.newPassword)
+    api.updateUser(vm.username, vm.code, vm.newPassword)
       .then((response) => {
         if (response.data.statusCode === boiler.config.errorStatus) {
           switch(response.data.referenceCode) {

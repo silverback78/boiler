@@ -24,11 +24,10 @@
                 <i class="material-icons blr-async-error" md-colors="{color:'warn-600'}" ng-switch-when="unavailable">highlight_off</i>
             </div>
           </div>
-          <input required name="username" ng-model="vm.form.username" ng-pattern="/^[a-z0-9\ \-]+$/i" minlength="7" ng-model-options="{ debounce: vm.debounce }" ng-attr-autofocus="true" autocomplete="username">
+          <input required name="username" ng-model="vm.form.username" ng-pattern="/^[a-z0-9\-]+$/i" ng-model-options="{ debounce: vm.debounce }" ng-attr-autofocus="true" autocomplete="username">
           <div ng-messages="vm.child_createUser.sequencerForm.username.$error" ng-show="vm.child_createUser.sequencerForm.username.$dirty">
             <div ng-message="required">Username is required.</div>
             <div ng-message="pattern">Username must be alphanumeric.</div>
-            <div ng-message="minlength">Username must be 7 characters or longer.</div>
           </div>
         </md-input-container>
 
@@ -86,7 +85,7 @@
       </div>
     </boiler-sequencer-step>
 
-    <boiler-sequencer-step next-label="Make User" on-show="vm.setFormInvalid()" on-next="vm.save()">
+    <boiler-sequencer-step ng-if="vm.captchaEnabled" next-label="Make User" on-show="vm.setFormInvalid()">
       <div layout="column">
         <div class="boiler-create-user-instructions">
           Gotta make sure you're not a robot. You're not a robot, are you?
@@ -99,7 +98,7 @@
       </div>
     </boiler-sequencer-step>
 
-    <boiler-sequencer-step on-next="vm.getStarted()" next-label="Get Started">
+    <boiler-sequencer-step on-show="vm.save()" on-next="vm.getStarted()" next-label="Get Started">
       <div layout="column">
         <div ng-if="vm.creatingUser">
           <div layout="row" layout-align="center center" class="boiler-create-user-spinner">

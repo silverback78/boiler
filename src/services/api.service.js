@@ -21,10 +21,15 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     spinner.visible = false;
   };
 
-  const httpGet = (url) => {
+  const sendRequest = (verb, url, data) => {
     return new Promise((resolve, reject) => {
       startSpinner();
-      $http.get(url)
+      $http({
+        method: verb,
+        url: url,
+        data: data,
+        headers: {'Content-Type': 'application/json'}
+      })
         .then((response) => {
           log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').then()']);
           log.debug('response', response);
@@ -41,48 +46,27 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     });
   };
 
-  const httpPost = (url, payload) => {
-    return new Promise((resolve, reject) => {
-      startSpinner();
-      $http.post(url, payload, boiler.config.defaultHeader)
-        .then((response) => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpPost(' + url + ').then()']);
-          log.debug('response', response);
-          stopSpinner();
-          resolve(response);
-          applyNextCycle();
-        })
-        .catch((e) => {
-          reject(e);
-          log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').catch()']);
-          log.error(boiler.config.verbiage.defaultCatchMessage);
-          log.debug('e', e);
-        });
-    });
-  };
+  const getSessionValue = (key) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getSessionValue(' + key + ')']);
 
-  const getPage = (params) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getPage(' + params + ')']);
-
-    const url = boiler.config.apiUrl + params;
+    const url = boiler.config.sessionUrl + boiler.config.session.getApi + key;
     log.debug('url', url);
 
-    return httpGet(url);
+    return sendRequest('GET', url);
   };
 
-  const createUser = (username, password, email, reCaptchaResponse) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'createUser(' + username + ', ' + password + ', ' + email + ', ' + reCaptchaResponse + ')']);
+  const setSessionValue = (key, value) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'setSessionValue(' + key + ', ' + value + ')']);
 
-    const payload = new FormData();
-    payload.append('username', username);
-    payload.append('password', password);
-    payload.append('email', email);
-    payload.append('reCaptchaResponse', reCaptchaResponse);
+    const data = {
+      key: key,
+      value: value
+    };
 
-    const url = boiler.config.apiUrl + boiler.config.user.apiUrl;
+    const url = boiler.config.sessionUrl + boiler.config.session.setApi;
     log.debug('url', url);
 
-    return httpPost(url, payload);
+    return sendRequest('PUT', url, data);
   };
 
   const isUsernameAvailable = (username) => {
@@ -91,120 +75,121 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     const url = boiler.config.apiUrl + boiler.config.user.checkNameUrl + username;
     log.debug('url', url);
 
-    return httpGet(url);
+    return sendRequest('GET', url);
   };
 
-  const isDeckNameAvailable = (username, deckName) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'isDeckNameAvailable(' + username, + ', ' + deckName + ')']);
+  const createUser = (username, password, email, reCaptchaResponse) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'createUser(' + username + ', ' + password + ', ' + email + ', ' + reCaptchaResponse + ')']);
 
-    const payload = new FormData();
-    payload.append('username', username);
-    payload.append('name', deckName);
+    const data = {
+      data: {
+        username: username,
+        password: password,
+        email: email,
+        reCaptchaResponse: reCaptchaResponse
+      }
+    };
 
-    const url = boiler.config.apiUrl + boiler.config.deck.checkNameUrl;
+    const url = boiler.config.apiUrl + boiler.config.user.apiUrl;
     log.debug('url', url);
 
-    return httpPost(url, payload);
+    return sendRequest('POST', url, data);
+  };
+
+  const updateUser = (username, password, newPassword, email) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'createUser(' + username + ', ' + password + ', ' + email + ')']);
+
+    const data = {
+      username: username,
+      password: password,
+      data: {
+        password: newPassword,
+        email: email
+      }
+    };
+
+    const url = boiler.config.apiUrl + boiler.config.user.apiUrl;
+    log.debug('url', url);
+
+    return sendRequest('PUT', url, data);
   };
 
   const authenticateUser = (username, password) => {
     log.setStack(boiler.enums.codeBlocks.service, ['api', 'authenticateUser(' + username + ', ' + password + ')']);
 
-    const payload = new FormData();
-    payload.append('username', username);
-    payload.append('password', password);
-
-    const url = boiler.config.apiUrl + boiler.config.user.authenticateUrl;
+    const url = boiler.config.apiUrl + boiler.config.user.authenticateUrl + username + '/' + password;
     log.debug('url', url);
 
-    return httpPost(url, payload);
+    return sendRequest('GET', url);
+  };
+
+  const getPage = (params) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getPage(' + params + ')']);
+
+    const url = boiler.config.apiUrl + params;
+    log.debug('url', url);
+
+    return sendRequest('GET', url);
+  };
+
+  const isDeckNameAvailable = (username, deckName) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'isDeckNameAvailable(' + username, + ', ' + deckName + ')']);
+
+    const url = boiler.config.apiUrl + boiler.config.deck.checkNameUrl + deckName;
+    log.debug('url', url);
+
+    return sendRequest('GET', url);
   };
 
   const createDeck = (username, password, deckName, description, cards) => {
     log.setStack(boiler.enums.codeBlocks.service, ['api', 'createDeck(' + username + ', ' + password + ', ' + deckName + ', ' + description + ', ' + cards + ')']);
 
-    const payload = new FormData();
-    payload.append('username', username);
-    payload.append('password', password);
-    payload.append('deckName', deckName);
-    payload.append('description', description);
-    payload.append('cards', angular.toJson(cards));
+    const data = {
+      username: username,
+      password: password,
+      deckName: deckName,
+      data: {
+        description: description,
+        cards: cards
+      }
+    };
 
     const url = boiler.config.apiUrl + boiler.config.deck.apiUrl;
     log.debug('url', url);
 
-    return httpPost(url, payload);
+    return sendRequest('PUT', url, data);
   };
 
-  const getCardsByDeck = (username, deckName) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getCardsByDeck(' + username + ', ' + deckName + ')']);
+  const getCards = (username, deckName) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getCards(' + username + ', ' + deckName + ')']);
 
-    const url = boiler.config.apiUrl + boiler.config.cards.apiUrl + username + '/' + deckName + '/' + boiler.config.pager.getAll;
+    const url = boiler.config.apiUrl + boiler.config.cards.apiUrl + username + '/' + deckName;
     log.debug('url', url);
 
-    return httpGet(url);
-  };
-
-  const setSessionValue = (key, value) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'setSessionValue(' + key + ', ' + value + ')']);
-
-    const payload = new FormData();
-    payload.append('key', key);
-    payload.append('value', value);
-
-    const url = boiler.config.sessionUrl + boiler.config.session.setApi;
-    log.debug('url', url);
-
-    return httpPost(url, payload);
-  };
-
-  const getSessionValue = (key) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getSessionValue(' + key + ')']);
-
-    const url = boiler.config.sessionUrl + boiler.config.session.getApi + key;
-    log.debug('url', url);
-
-    return httpGet(url);
+    return sendRequest('GET', url);
   };
 
   const resetPassword = (username) => {
     log.setStack(boiler.enums.codeBlocks.service, ['api', 'resetPassword(' + username + ')']);
 
-    const payload = new FormData();
-    payload.append('username', username);
-
-    const url = boiler.config.apiUrl + boiler.config.user.resetPasswordUrl;
+    const url = boiler.config.apiUrl + boiler.config.user.apiUrl + boiler.config.user.resetPasswordUrl + username;
     log.debug('url', url);
 
-    return httpPost(url, payload);
-  };
-
-  const updatePassword = (username, code, password) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'updatePassword(' + username + ', ' + code + ', ' + password + ')']);
-
-    const payload = new FormData();
-    payload.append('username', username);
-    payload.append('code', code);
-    payload.append('password', password);
-
-    const url = boiler.config.apiUrl + boiler.config.user.updatePasswordUrl;
-    log.debug('url', url);
-
-    return httpPost(url, payload);
+    return sendRequest('GET', url);
   };
 
   return {
-    getPage,
-    createUser,
     isUsernameAvailable,
-    createDeck,
-    authenticateUser,
-    isDeckNameAvailable,
-    getCardsByDeck,
-    setSessionValue,
     getSessionValue,
+    setSessionValue,
+    createUser,
+    authenticateUser,
+    getPage,
+    isDeckNameAvailable,
+    createDeck,
+    getCards,
     resetPassword,
-    updatePassword
+    updateUser
   };
 };
 

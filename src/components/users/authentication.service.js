@@ -39,7 +39,7 @@ var authentication = function(api, log, user, usernameUrlFilter) {
           user.password = password;
           user.loaded = true;
 
-          if (data.statusCode === boiler.config.apiSuccessCode) {
+          if (data.authenticated === true) {
             api.setSessionValue(boiler.config.users.sessionKey, angular.toJson({
               authenticated: true,
               username: data.username,
@@ -51,7 +51,8 @@ var authentication = function(api, log, user, usernameUrlFilter) {
           }
           else {
             user.authenticated = false;
-            if (data.referenceCode === boiler.config.user.emailOnFileErrorCode) {
+            if (data.referenceCode === boiler.config.user.emailOnFileErrorCode ||
+                data.referenceCode === boiler.config.user.expiredRecoveryCode) {
               user.emailOnFile = true;
             }
             else {
