@@ -4,7 +4,7 @@
 
 .users-add-icon {
   position: absolute;
-  right: -4px;
+  right: 25px;
   top: 15px;
   font-size: 35px;
   cursor: pointer;
@@ -12,7 +12,7 @@
 
 .users-view-get-started {
   position: absolute;
-  right: 37px;
+  right: 60px;
   top: 53px;
 }
 
@@ -33,4 +33,18 @@
 .users-no-decks {
   text-align: center;
   padding-top: 35px;
+}
+
+.users-deck-list {
+  padding-top: 18px;
+  font-size: 20px;
+}
+
+.users-row-text {
+  margin-left: 10px !important;
+}
+
+.users-deck-headline {
+  margin-left: 16px;
+  margin-bottom: 25px;
 }

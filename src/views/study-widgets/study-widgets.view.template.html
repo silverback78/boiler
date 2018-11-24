@@ -1,6 +1,6 @@
 <boiler-page-header>
   <span ng-if="vm.username && vm.deck" class="study-widgets-page-header">
-    <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | usernameFilter}}</span> / {{vm.deck | usernameFilter}}
+    <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | removeDashes}}</span> / {{vm.deck | removeDashes}}
   </span>
 </boiler-page-header>
 

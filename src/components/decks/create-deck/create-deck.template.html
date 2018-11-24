@@ -3,6 +3,11 @@
   <boiler-sequencer-step next-label="Generate" on-next="vm.generatePreview()">
     <div ng-show="!vm.showInstructions">
       <a href="#" ng-click="vm.showInstructions = true" class="create-deck-instructions">Instructions</a>
+      <md-input-container class="md-block" flex>
+        <label>Category</label>
+        <input name="category" ng-model="vm.category" type="text">
+      </md-input-container>
+
       <md-input-container class="md-block boiler-create-card-deck-text">
         <label>Copy your deck and paste here</label>
         <textarea class="boiler-create-deck-textarea" required ng-model="vm.parseText" rows="10" md-select-on-focus boiler-tab></textarea>

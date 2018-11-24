@@ -1,6 +1,6 @@
 'use strict';
 
-var authentication = function(api, log, user, usernameUrlFilter) {
+var authentication = function(api, log, user, addDashesFilter) {
   const initialize = () => {
     log.setStack(boiler.enums.codeBlocks.service, ['authentication', 'initialize()']);
     api.getSessionValue(boiler.config.users.sessionKey)
@@ -17,7 +17,7 @@ var authentication = function(api, log, user, usernameUrlFilter) {
             loaded: true
           };
         user.authenticated = data.authenticated;
-        user.username = usernameUrlFilter(data.username);
+        user.username = addDashesFilter(data.username);
         user.password = data.password;
         user.email = data.email;
         user.loaded = true;
@@ -35,7 +35,7 @@ var authentication = function(api, log, user, usernameUrlFilter) {
           const data = response.data;
           log.debug('user', data);
 
-          user.username = usernameUrlFilter(data.username);
+          user.username = addDashesFilter(data.username);
           user.password = password;
           user.loaded = true;
 
@@ -52,7 +52,8 @@ var authentication = function(api, log, user, usernameUrlFilter) {
           else {
             user.authenticated = false;
             if (data.referenceCode === boiler.config.user.emailOnFileErrorCode ||
-                data.referenceCode === boiler.config.user.expiredRecoveryCode) {
+                data.referenceCode === boiler.config.user.expiredRecoveryCode ||
+                data.referenceCode === boiler.config.user.invalidRecoveryCode) {
               user.emailOnFile = true;
             }
             else {
@@ -79,5 +80,5 @@ var authentication = function(api, log, user, usernameUrlFilter) {
   };
 };
 
-authentication.$inject = ['api', 'log', 'user', 'usernameUrlFilter'];
+authentication.$inject = ['api', 'log', 'user', 'addDashesFilter'];
 angular.module('boiler').factory('authentication', authentication);

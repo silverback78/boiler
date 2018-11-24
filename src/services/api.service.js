@@ -31,7 +31,7 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
         headers: {'Content-Type': 'application/json'}
       })
         .then((response) => {
-          log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').then()']);
+          log.setStack(boiler.enums.codeBlocks.service, ['api', 'httpGet(' + url + ').then()']);
           log.debug('response', response);
           stopSpinner();
           resolve(response);
@@ -39,7 +39,7 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
         })
         .catch((e) => {
           reject(e);
-          log.setStack(boiler.enums.codeBlocks.controller, ['api', 'httpGet(' + url + ').catch()']);
+          log.setStack(boiler.enums.codeBlocks.service, ['api', 'httpGet(' + url + ').catch()']);
           log.error(boiler.config.verbiage.defaultCatchMessage);
           log.debug('e', e);
         });
@@ -114,6 +114,45 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     return sendRequest('PUT', url, data);
   };
 
+  const updateDeck = (username, password, deckName, description, category) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'updateDeck(' + username + ', ' + password + ', ' + deckName + ', ' + description + ')']);
+
+    const data = {
+      username: username,
+      password: password,
+      deckName: deckName,
+      data: {
+        description: description,
+        category: category
+      }
+    };
+
+    const url = boiler.config.apiUrl + boiler.config.deck.apiUrl;
+    log.debug('url', url);
+
+    return sendRequest('PUT', url, data);
+  };
+
+  const createDeck = (username, password, deckName, description, category, cards) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'createDeck(' + username + ', ' + password + ', ' + deckName + ', ' + description + ', ' + cards + ')']);
+
+    const data = {
+      username: username,
+      password: password,
+      deckName: deckName,
+      data: {
+        description: description,
+        category: category,
+        cards: cards
+      }
+    };
+
+    const url = boiler.config.apiUrl + boiler.config.deck.apiUrl;
+    log.debug('url', url);
+
+    return sendRequest('PUT', url, data);
+  };
+
   const authenticateUser = (username, password) => {
     log.setStack(boiler.enums.codeBlocks.service, ['api', 'authenticateUser(' + username + ', ' + password + ')']);
 
@@ -132,32 +171,40 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     return sendRequest('GET', url);
   };
 
-  const isDeckNameAvailable = (username, deckName) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'isDeckNameAvailable(' + username, + ', ' + deckName + ')']);
+  const getUser = (user) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getUser()']);
 
-    const url = boiler.config.apiUrl + boiler.config.deck.checkNameUrl + deckName;
+    const url = boiler.config.apiUrl + boiler.config.user.apiUrl + user;
     log.debug('url', url);
 
     return sendRequest('GET', url);
   };
 
-  const createDeck = (username, password, deckName, description, cards) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['api', 'createDeck(' + username + ', ' + password + ', ' + deckName + ', ' + description + ', ' + cards + ')']);
+  const getDecks = (user) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'getDecks()']);
 
-    const data = {
-      username: username,
-      password: password,
-      deckName: deckName,
-      data: {
-        description: description,
-        cards: cards
-      }
-    };
-
-    const url = boiler.config.apiUrl + boiler.config.deck.apiUrl;
+    const url = boiler.config.apiUrl + boiler.config.decks.apiUrl + user;
     log.debug('url', url);
 
-    return sendRequest('PUT', url, data);
+    return sendRequest('GET', url);
+  };
+
+  const deleteDeck = (username, deckName, password) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'deleteDeck()']);
+
+    const url = boiler.config.apiUrl + boiler.config.deck.apiUrl + username + '/' + deckName + '/' + password;
+    log.debug('url', url);
+
+    return sendRequest('DELETE', url);
+  };
+
+  const isDeckNameAvailable = (username, deckName) => {
+    log.setStack(boiler.enums.codeBlocks.service, ['api', 'isDeckNameAvailable(' + username, + ', ' + deckName + ')']);
+
+    const url = boiler.config.apiUrl + boiler.config.deck.checkNameUrl + username + '/' + deckName;
+    log.debug('url', url);
+
+    return sendRequest('GET', url);
   };
 
   const getCards = (username, deckName) => {
@@ -185,11 +232,15 @@ var api = function($http, $rootScope, $timeout, log, spinner) {
     createUser,
     authenticateUser,
     getPage,
+    getUser,
+    getDecks,
+    deleteDeck,
     isDeckNameAvailable,
     createDeck,
     getCards,
     resetPassword,
-    updateUser
+    updateUser,
+    updateDeck
   };
 };
 

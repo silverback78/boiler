@@ -1,13 +1,13 @@
 'use strict';
 
-var go = function($location, log, usernameUrlFilter) {
+var go = function($location, log, addDashesFilter) {
   const home = () => {
     log.setStack(boiler.enums.codeBlocks.service, ['go', 'home()']);
     $location.path('/');
   };
 
   const toUser = (user) => {
-    user = usernameUrlFilter(user);
+    user = addDashesFilter(user);
     log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ')']);
     $location.path('users/' + user);
 
@@ -31,5 +31,5 @@ var go = function($location, log, usernameUrlFilter) {
   };
 };
 
-go.$inject = ['$location', 'log', 'usernameUrlFilter'];
+go.$inject = ['$location', 'log', 'addDashesFilter'];
 angular.module('boiler').factory('go', go);

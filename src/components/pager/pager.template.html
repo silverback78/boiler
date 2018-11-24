@@ -7,7 +7,7 @@
           <div class="md-list-item-text boiler-pager-column-container ">
               <div class="md-list-item-text" layout="row" class="boiler-pager-column-container">
                 <div layout="column" ng-repeat="column in vm.pagerColumns"  class="boiler-pager-column-cell ng-style: vm.pagerColumnWidth">
-                  <span ng-if="column === 'username'">{{item[column] | usernameFilter}}</span>
+                  <span ng-if="column === 'username'">{{item[column] | removeDashes}}</span>
                   <span ng-if="column !== 'username'">{{item[column]}}</span>
                 </div>
               </div>
@@ -45,7 +45,7 @@
           <div class="md-list-item-text boiler-pager-column-container ">
               <div class="md-list-item-text" layout="row" class="boiler-pager-column-container">
                 <div layout="column" ng-repeat="column in vm.pagerColumns"  class="boiler-pager-column-cell ng-style: vm.pagerColumnWidth">
-                  <span ng-if="column === 'username'">{{item[column] | usernameFilter}}</span>
+                  <span ng-if="column === 'username'">{{item[column] | removeDashes}}</span>
                   <span ng-if="column !== 'username'">{{item[column]}}</span>
                 </div>
               </div>

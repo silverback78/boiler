@@ -24,8 +24,8 @@ require('./directives/submit.directive.js');
 require('./directives/tab.directive.js');
 
 /* Filters */
-require('./filters/user-name.filter.js');
-require('./filters/user-name-url.filter.js');
+require('./filters/add-dashes.filter.js');
+require('./filters/remove-dashes.filter.js');
 
 /* Images */
 importAll(require.context('./images/', false, /\.(png|jpe?g|svg)$/));

@@ -1,20 +1,54 @@
 <boiler-page-header>
-  <span ng-if="vm.username">{{vm.username | usernameFilter}}</span>
+  <span ng-if="vm.username">{{vm.username | removeDashes}}</span>
   <span ng-if="!vm.username">Users</span>
 </boiler-page-header>
 
-<boiler-container padding="true">
+<boiler-container padding="true" ng-if="vm.loaded">
   <div layout="row">
     <div flex-xs="0" flex-sm="0" flex-md="10" flex="15"></div>
     <div flex>
       <div ng-if="vm.username" class="users-add">
         <i class="material-icons users-add-icon" md-colors="{color:'accent-900'}" ng-click="vm.child_createDeck.showCreateDeck()" ng-if="vm.currentUser.authenticated && vm.currentUser.username === vm.username">add_circle</i>
-        <div layout="row" ng-if="vm.currentUser.authenticated && vm.currentUser.username === vm.username && vm.child_decksPager.data.page.totalCount === '0'" class="gutter-top">
+        <div layout="row" ng-if="vm.currentUser.authenticated && vm.currentUser.username === vm.username && vm.decks.length === 0" class="gutter-top">
           <img src="./src/images/get-started.png" class="users-view-get-started" alt="To get started, click the plus icon named add circle">
           <div class="users-view-get-started-spacer"></div>
         </div>
-        <boiler-pager ng-if="vm.child_decksPager.data.page.totalCount !== '0'" pager-id="decksPager" title="Decks" api-url="decks/{{vm.username}}" item-link="['users','username','name','card-list']" columns="['name']"></boiler-pager>
-        <div class="users-no-decks" ng-if="vm.child_decksPager.data.page.totalCount === '0' && vm.currentUser.username !== vm.username">
+
+        <md-list class="users-deck-list" ng-if="vm.decks.length > 0">
+          <div class="md-headline users-deck-headline" md-colors="{color:'primary-900'}">Decks <span ng-if="vm.category"> / {{vm.category}}</span></div>
+          <md-list-item ng-repeat="category in vm.categories" ng-click="vm.category=category.name" ng-if="!vm.category">
+            <i class="material-icons" md-colors="{color:'accent-900'}">label</i>
+            <md-truncate flex class="users-row-text">{{category.name}}</md-truncate>
+          </md-list-item>
+
+          <md-list-item ng-click="vm.category=''" ng-if="vm.category">
+            <i class="material-icons">keyboard_backspace</i>
+          </md-list-item>
+
+          <md-list-item ng-if="vm.category == deck.category" ng-repeat="deck in vm.decks" ng-click="vm.go.toWidget(vm.username, deck.name, 'card-list')">
+            <i class="material-icons" md-colors="{color:'primary-900'}">widgets</i>
+            <md-truncate flex class="users-row-text">{{deck.name | removeDashes}} <small ng-if="deck.description"> - {{deck.description}}</small></md-truncate>
+            <md-menu ng-if="vm.currentUser.username === vm.username">
+              <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                <i class="material-icons" md-colors="{color:'background-500'}"">settings</i>
+              </md-button>
+              <md-menu-content width="4">
+                <md-menu-item>
+                  <md-button ng-click="vm.edit(deck)">
+                    Edit
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ng-click="vm.confirmDelete(deck)">
+                    Delete
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </md-list-item>
+        </md-list>
+
+        <div class="users-no-decks" ng-if="vm.decks.length === 0 && vm.currentUser.username !== vm.username">
           <span class="md-headline" md-colors="{color:'primary-500'}">{{vm.username}}</span> has not yet added any decks.
           <div class="users-sad-face">
             <i class="material-icons" md-colors="{color:'primary-900'}">sentiment_dissatisfied</i>
@@ -30,10 +64,28 @@
   <div flex-xs="0" flex-sm="25" flex-md="30" flex="35"></div>
   <div flex>
     <boiler-container theme="accent" size="large" padding="true" ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
-      <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
+      <boiler-login on-create-user="vm.refreshDecks()"></boiler-login>
     </boiler-container>
   </div>
   <div flex-xs="0" flex-sm="25" flex-md="30" flex="35"></div>
 </div>
 
 <boiler-create-deck create-deck-id="createDeck" on-save="vm.refreshDecks()"></boiler-create-deck>
+
+<boiler-dialog dialog-id="editDialog" size="small" title="Edit" buttons="[{ label: 'Cancel', class: 'md-raised', close: true }, { label: 'Ok', class: 'md-raised md-primary', close: true, action: vm.save }]">
+  <pane-content><md-input-container class="md-block" flex>
+    <label>Description</label>
+      <input name="description" ng-model="vm.editDeck.description" type="text">
+    </md-input-container>
+    <md-input-container class="md-block" flex>
+      <label>Category</label>
+      <input name="category" ng-model="vm.editDeck.category" type="text">
+    </md-input-container>
+  </pane-content>
+</boiler-dialog>
+
+<boiler-dialog dialog-id="deleteDialog" size="small" title="Delete" buttons="[{ label: 'Cancel', class: 'md-raised', close: true }, { label: 'Ok', class: 'md-raised md-primary', close: true, action: vm.delete }]">
+  <pane-content>
+    <p>Are you sure you wish to delete <strong>{{vm.deleteDeck.name}}</strong>?</p>
+  </pane-content>
+</boiler-dialog>

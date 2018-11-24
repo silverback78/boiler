@@ -1,6 +1,6 @@
 'use strict';
 
-var createDeckController = function(api, createDeck, log, stash, user) {
+var createDeckController = function(addDashesFilter, api, createDeck, log, stash, user) {
   log.setStack(boiler.enums.codeBlocks.controller, 'createDeckController');
 
   const vm = this;
@@ -14,6 +14,7 @@ var createDeckController = function(api, createDeck, log, stash, user) {
   vm.debounce = boiler.config.input.debounce;
   vm.checkingPassword = String.empty;
   vm.authenticated = String.empty;
+  vm.category = String.empty;
   vm.errors = [];
   vm.processingDeck = false;
 
@@ -27,7 +28,7 @@ var createDeckController = function(api, createDeck, log, stash, user) {
     vm.processingDeck = true;
     Promise.all(
       vm.decks.map(
-        deck => api.createDeck(vm.currentUser.username, vm.currentUser.password, deck.name, deck.description, deck.cards)
+        deck => api.createDeck(vm.currentUser.username, vm.currentUser.password, deck.name, deck.description, vm.category, deck.cards)
           .then((response) => {
             vm.processingDeck = false;
             log.debug('Clearing stash for ' + vm.currentUser.username + ' ' + deck.name);
@@ -69,7 +70,7 @@ var createDeckController = function(api, createDeck, log, stash, user) {
     if (!vm.decks) return;
     Promise.all(
       vm.decks.map(
-        item => api.isDeckNameAvailable(vm.currentUser.username, item.name)
+        item => api.isDeckNameAvailable(vm.currentUser.username, addDashesFilter(item.name))
           .then((response) => {
             if (!response.data) {
               vm.duplicateNames.push(item.name);
@@ -107,5 +108,5 @@ var createDeckController = function(api, createDeck, log, stash, user) {
   };
 };
 
-createDeckController.$inject = ['api', 'createDeck', 'log', 'stash', 'user'];
+createDeckController.$inject = ['addDashesFilter', 'api', 'createDeck', 'log', 'stash', 'user'];
 angular.module('boiler').controller('createDeckController', createDeckController);

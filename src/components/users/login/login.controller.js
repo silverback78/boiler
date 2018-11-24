@@ -80,14 +80,12 @@ var loginController = function($scope, api, authentication, go, log, user) {
 
   vm.tryAgain = () => {
     log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'tryAgain()']);
-    vm.username = String.empty;
     vm.password = String.empty;
     vm.state = boiler.config.user.login.states.initial;
   };
 
   vm.tryResetAgain = () => {
     log.setStack(boiler.enums.codeBlocks.controller, ['loginController', 'tryResetAgain()']);
-    vm.username = String.empty;
     vm.password = String.empty;
     vm.state = boiler.config.user.login.states.resetPassword;
   };
