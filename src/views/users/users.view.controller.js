@@ -20,11 +20,19 @@ var usersViewController = function($routeParams, api, log, go, user) {
   vm.refreshDecks = () => {
     api.getDecks(vm.username)
       .then((response) => {
-        if (response.data.decks)
+        if (response.data.decks) {
           vm.decks = response.data.decks;
+        }
+        else {
+          vm.decks = [];
+        }
 
-        if (response.data.deckCategories)
+        if (response.data.deckCategories) {
           vm.categories = response.data.deckCategories;
+        }
+        else {
+          vm.categories = String.empty;
+        }
 
         vm.loaded = true;
       });

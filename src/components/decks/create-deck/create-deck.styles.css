@@ -72,12 +72,6 @@
   padding: 10px;
 }
 
-.create-deck-instructions {
-  position: absolute;
-  top: 23px;
-  right: 20px;
-}
-
 .boiler-create-deck-spinner {
   margin: 50px;
 }

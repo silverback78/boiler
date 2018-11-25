@@ -17,6 +17,7 @@ var createDeckController = function(addDashesFilter, api, createDeck, log, stash
   vm.category = String.empty;
   vm.errors = [];
   vm.processingDeck = false;
+  vm.createDeckStepIndex = 5;
 
   vm.showCreateDeck = () => {
     vm.child_createDeck.showSequencer();
@@ -100,6 +101,11 @@ var createDeckController = function(addDashesFilter, api, createDeck, log, stash
     }
 
     return colSize;
+  };
+
+  vm.skip = () => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['createDeckController', 'vm.skip()']);
+    vm.child_createDeck.goToStep(vm.createDeckStepIndex);
   };
 
   vm.error = () => {

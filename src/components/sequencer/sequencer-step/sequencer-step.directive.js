@@ -8,6 +8,9 @@ var boilerSequencerStep = function(log) {
     scope: {
       nextLabel: '@',
       backLabel: '@',
+      function1Enabled: '=',
+      function1Label: '@',
+      onFunction1: '&',
       onNext: '&',
       onBack: '&',
       onShow: '&'

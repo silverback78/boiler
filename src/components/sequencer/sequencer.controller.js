@@ -32,17 +32,29 @@ var sequencerController = function(log, spinner) {
     vm.selected = step;
   };
 
+  vm.goToStep = (step) => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['sequencerController', 'vm.goToStep(' + step + ')']);
+    vm.step = step;
+    vm.select(vm.steps[vm.step]);
+  };
+
   vm.next = () => {
     log.setStack(boiler.enums.codeBlocks.controller, ['sequencerController', 'vm.next()']);
     if (angular.isFunction(vm.steps[vm.step].onNext)) {
       vm.steps[vm.step].onNext();
     }
 
-    vm.step++;
-    vm.select(vm.steps[vm.step]);
+    vm.goToStep(vm.step + Number.one);
 
     if (angular.isFunction(vm.steps[vm.step].onShow)) {
       vm.steps[vm.step].onShow();
+    }
+  };
+
+  vm.function1 = () => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['sequencerController', 'vm.function1()']);
+    if (angular.isFunction(vm.steps[vm.step].onFunction1)) {
+      vm.steps[vm.step].onFunction1();
     }
   };
 
@@ -52,8 +64,7 @@ var sequencerController = function(log, spinner) {
       vm.steps[vm.step].onBack();
     }
 
-    vm.step--;
-    vm.select(vm.steps[vm.step]);
+    vm.goToStep(vm.step - Number.one);
   };
 
   vm.finish = () => {
@@ -68,7 +79,7 @@ var sequencerController = function(log, spinner) {
 
   vm.reset = () => {
     vm.sequencerForm.$setPristine();
-    vm.step = 0;
+    vm.step = Number.zero;
     vm.select(vm.steps[vm.step]);
   };
 

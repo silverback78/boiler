@@ -28,6 +28,7 @@
 
     <pane-buttons>
       <md-button class="md-raised" ng-click="vm.back()" ng-disabled="vm.spinner.active || (vm.step === 0) || (vm.step >= vm.steps.length - 1)">{{vm.steps[vm.step].backLabel || 'Back'}}</md-button>
+      <md-button class="md-raised" ng-click="vm.function1()" ng-if="vm.steps[vm.step].function1Enabled" ng-disabled="vm.spinner.active">{{vm.steps[vm.step].function1Label || 'Function 1'}}</md-button>
       <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.next()" ng-if="vm.step < vm.steps.length - 1" ng-disabled="vm.spinner.active || vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Next'}}</md-button>
       <md-button class="md-raised md-primary boiler-sequencer-button" ng-click="vm.finish()" ng-if="vm.step >= vm.steps.length - 1" ng-disabled="vm.spinner.active || vm.sequencerForm.$invalid">{{vm.steps[vm.step].nextLabel || 'Finish'}}</md-button>
     </pane-buttons>
