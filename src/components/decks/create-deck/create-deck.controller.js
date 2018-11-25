@@ -17,9 +17,11 @@ var createDeckController = function(addDashesFilter, api, createDeck, log, stash
   vm.category = String.empty;
   vm.errors = [];
   vm.processingDeck = false;
+  vm.firstStepIndex = 0;
   vm.createDeckStepIndex = 5;
 
   vm.showCreateDeck = () => {
+    vm.child_createDeck.goToStep(vm.firstStepIndex);
     vm.child_createDeck.showSequencer();
   };
 
