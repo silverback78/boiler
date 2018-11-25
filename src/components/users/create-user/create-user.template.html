@@ -1,4 +1,4 @@
-  <boiler-sequencer sequencer-id="createUser" dialog="true" dialog-size="small" dialog-class="boiler-create-user-dialog" title="Create a User">
+  <boiler-sequencer sequencer-id="createUser" dialog="true" dialog-size="small" dialog-class="boiler-create-user-dialog" title="Create an Account">
 
     <boiler-sequencer-step next-label="Let's do it">
       <div layout="column">
@@ -85,7 +85,7 @@
       </div>
     </boiler-sequencer-step>
 
-    <boiler-sequencer-step ng-if="vm.captchaEnabled" next-label="Make User" on-show="vm.setFormInvalid()">
+    <boiler-sequencer-step next-label="Make User" on-show="vm.setFormInvalid()">
       <div layout="column">
         <div class="boiler-create-user-instructions">
           Gotta make sure you're not a robot. You're not a robot, are you?

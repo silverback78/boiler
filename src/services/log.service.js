@@ -93,7 +93,7 @@ var log = function($log) {
   };
 
   let writeLog = (logSeverity, info, obj) => {
-    let logsDisabled = boiler.env !== boiler.enums.env.dev || !boiler.config.features.log.enabled;
+    let logsDisabled = !boiler.config.features.log.enabled;
     if (logsDisabled) return {};
 
     let logMessage = [];
