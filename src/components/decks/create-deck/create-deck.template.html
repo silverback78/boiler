@@ -1,62 +1,85 @@
 <boiler-sequencer sequencer-id="createDeck" dialog="true" dialog-size="large" title="Create a Deck">
 
-  <boiler-sequencer-step next-label="Next" function1-enabled="true" function1-label="Skip" on-function1="vm.skip()">
-    <div>
-      <div class="md-headline" md-colors="{color:'accent-900'}"><span md-colors="{color:'primary-900'}">StudyWidgets</span> works with your notes.</div>
-
-      <div layout="column" layout-align="center center" class="gutter-top">
-        <img src="./src/images/copy-paste-study.png" alt="Copy - Paste - Study">
-      </div>
-
-      <p>
-        <ol>
-          <li><strong>Type</strong> your notes in a way <strong md-colors="{color:'primary-900'}">StudyWidgets</strong> understands it *</li>
-          <li><strong>Copy</strong> your notes</li>
-          <li><strong>Paste</strong> your notes into the editor</li>
-        </ol>
-      </p>
-      <p>
-          <i>* <strong md-colors="{color:'primary-900'}">OneNote</strong> (no affiliation) works best, and it's free. <a target="_blank" href="https://www.microsoft.com/en-us/p/onenote/9wzdncrfhvjl?activetab=pivot:overviewtab">Windows 10</a> &mdash; <a target="_blank" href="https://www.onenote.com/notebooks">Online</a></i>
-      </p>
-      <hr />
-      <p>
-        On the next page you'll see how to take notes so that <span md-colors="{color:'primary-900'}">StudyWidgets</span> can turn them into instant study material.
-      </p>
-    </div>
+  <boiler-sequencer-step next-label="Next" function1-enabled="true" function1-label="Skip" on-function1="vm.skip()" dialog-size="small">
+    <p class="md-headline" md-colors="{color:'primary-900'}">
+      First, take notes
+    </p>
+    <p>
+      Type your notes in your favorite text editor using a <a href="#" ng-click="vm.child_createDeck.goToStep(vm.formatStepIndex)">format</a> that <strong md-colors="{color:'primary-900'}">StudyWidgets</strong> understands.
+    </p>
+    <p>
+      You can use any editor, but OneNote works best. OneNote is free. You can
+      <a target="_blank" href="https://www.microsoft.com/en-us/p/onenote/9wzdncrfhvjl?activetab=pivot:overviewtab">install on Windows 10</a> or use the 
+      <a target="_blank" href="https://www.onenote.com/notebooks">online version</a>.
+    </p>
+    <p>
+      <i>StudyWidgets has no affiliation with Microsoft or OneNote.</i>
+    </p>
   </boiler-sequencer-step>
 
-  <boiler-sequencer-step next-label="Next" function1-enabled="true" function1-label="Skip" on-function1="vm.skip()">
-    <div>
-      <div class="md-headline" md-colors="{color:'accent-900'}">Take your notes using this format:</div>
-      <em md-colors="{color:'background-500'}">You can use any editor or type directly into the text box. Multiple tabs are ignored. Separate multiple decks by pressing enter twice.</em>
-      <p md-whiteframe="1" class="create-deck-format">
-          Physical Connections <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
-          USB 1 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> Low speeds of 1.5Mbps and full speeds of 12Mbps <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
-          USB 2 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> 480Mbps, maximum cable length of 5m <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
-          SATA 1 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> Maximum speeds of 1.5Gbps <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span><br /><br />
-          SATA 2 <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span> Maximum speeds of 3Gbps <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span>
-      </p>
-    </div>
-  </boiler-sequencer-step>
-
-  <boiler-sequencer-step next-label="Next" function1-enabled="true" function1-label="Skip" on-function1="vm.skip()">
+  <boiler-sequencer-step next-label="Next" function1-enabled="true" function1-label="Skip" on-function1="vm.skip()" dialog-size="small">
+    <p class="md-headline" md-colors="{color:'primary-900'}">
+      Use the following format
+    </p>
+    <p>
+      <ol>
+        <li>
+          Type the 
+          <span>
+            <md-tooltip md-direction="top">
+              The title for your deck, for example: Spanish Numbers from One to Ten.
+            </md-tooltip>
+            <strong md-colors="{color:'accent-900'}">
+              deck title
+            </strong>
+          </span>
+          <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span>
+        </li>
+        <li>
+          Type the
+          <span>
+            <md-tooltip md-direction="top">
+              The word on the front of the flashcard.
+            </md-tooltip>
+            <strong md-colors="{color:'accent-900'}">
+              term
+            </strong>
+          </span>
+          <span md-colors="{color:'primary-900'}">&lt;press <strong>tab</strong>&gt;</span>
+        </li>
+        <li>
+          Type the
+          <span>
+            <md-tooltip md-direction="top">
+              The word on the back of the flashcard.
+            </md-tooltip>
+            <strong md-colors="{color:'accent-900'}">
+              definition
+            </strong>
+          </span>
+          <span md-colors="{color:'primary-900'}">&lt;press <strong>enter</strong>&gt;</span>
+        </li>
+        <li><em>Repeat steps 2 and 3 for each card</em></li>
+      </ol>
+    </p>
     <div layout="column" layout-align="center center" class="gutter-top">
-      <div class="md-headline" md-colors="{color:'accent-900'}">OneNote example</div>
-      <img src="./src/images/one-note-example.png" alt="OneNote example">
+      OneNote automatically formats for you
+      <img src="./src/images/one-note-example-small.png" alt="OneNote example">
     </div>
   </boiler-sequencer-step>
 
-  <boiler-sequencer-step next-label="Next" function1-enabled="true" function1-label="Skip" on-function1="vm.skip()">
+  <boiler-sequencer-step next-label="Next" dialog-size="small">
+    <p class="md-headline" md-colors="{color:'primary-900'}">
+      Select and Copy your deck
+    </p>
+    <p>
+      Use your mouse or keyboard to select the deck(s) you wish to create.
+    </p>
+    <p>
+      Copy the deck and on the next page you will paste your deck into the editor.
+    </p>
     <div layout="column" layout-align="center center" class="gutter-top">
-      <span class="md-headline" md-colors="{color:'accent-900'}">Select the deck(s) you wish to create</span>
-      <img src="./src/images/one-note-select-example.png" alt="OneNote example">
-    </div>
-  </boiler-sequencer-step>
-
-  <boiler-sequencer-step next-label="Next">
-    <div layout="column" layout-align="center center" class="gutter-top">
-      <span class="md-headline" md-colors="{color:'accent-900'}">Copy</span>
-      <img src="./src/images/one-note-copy-example.png" alt="OneNote example">
+      <img src="./src/images/one-note-copy-example-small.png" alt="OneNote example">
     </div>
   </boiler-sequencer-step>
 

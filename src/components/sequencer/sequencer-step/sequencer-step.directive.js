@@ -6,6 +6,7 @@ var boilerSequencerStep = function(log) {
     restrict: 'E',
     transclude: true,
     scope: {
+      dialogSize: '@',
       nextLabel: '@',
       backLabel: '@',
       function1Enabled: '=',

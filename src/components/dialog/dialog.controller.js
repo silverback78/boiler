@@ -5,6 +5,15 @@ var dialogController = function($document, $mdDialog, log) {
 
   const vm = this;
 
+  vm.setSize = (size) => {
+    log.setStack(boiler.enums.codeBlocks.controller, ['dialogController', 'vm.setSize(' + size + ')']);
+    let width = boiler.config.dialog.size[size] + 'px' || boiler.config.dialog.size.medium + 'px';
+    vm.maxWidth = {
+      width: '100%',
+      'max-width': width
+    };
+  };
+
   vm.showDialog = () => {
     log.setStack(boiler.enums.codeBlocks.controller, ['dialogController', 'vm.showDialog()']);
     $mdDialog.show({

@@ -30,6 +30,12 @@ var sequencerController = function(log, spinner) {
     });
     step.selected = true;
     vm.selected = step;
+    if (vm.steps[vm.step].dialogSize) {
+      vm.child_sequencerDialog.setSize(vm.steps[vm.step].dialogSize);
+    }
+    else if (vm.dialogSize) {
+      vm.child_sequencerDialog.setSize(vm.dialogSize);
+    }
   };
 
   vm.goToStep = (step) => {
@@ -85,9 +91,6 @@ var sequencerController = function(log, spinner) {
 
   vm.addStep = (step) => {
     log.setStack(boiler.enums.codeBlocks.controller, ['sequencerController', 'vm.addStep(' + step + ')']);
-    if (!vm.steps.length) {
-      vm.select(step);
-    }
     vm.steps.push(step);
   };
 };

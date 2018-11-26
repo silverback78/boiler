@@ -157,8 +157,6 @@ var createDeck = function(log) {
 
     let rows = parseText.trim().split(boiler.config.parseDeck.newLineDelimeter);
 
-    if (!rows[boiler.config.parseDeck.firstCardIndex]) return;
-
     if (rows[boiler.config.parseDeck.firstCardIndex].match(boiler.config.parseDeck.tabDelimeter)) {
       return oneRowKVP(rows);
     }

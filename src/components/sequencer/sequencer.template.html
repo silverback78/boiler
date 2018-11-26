@@ -17,7 +17,7 @@
         <div class="boiler-sequencer-progress-container" ng-repeat="step in vm.steps">
           <i class="material-icons boiler-sequencer-progress-circle" md-colors="{color:'primary-900'}" ng-if="$index < vm.steps.length - 1">panorama_fish_eye</i>
           <i class="material-icons boiler-sequencer-progress-active" md-colors="{color:'accent-600'}" ng-if="$index < vm.steps.length - 1 && vm.steps.indexOf(vm.selected) === $index">fiber_manual_record</i>
-          <i class="material-icons boiler-sequencer-progress-icon" md-colors="{color:'accent-600'}" ng-if="$index < vm.steps.length - 1 && vm.steps.indexOf(vm.selected) > $index">done</i>
+          <i class="material-icons boiler-sequencer-progress-icon" md-colors="{color:'accent-600'}" ng-if="$index < vm.steps.length - 1 && vm.steps.indexOf(vm.selected) > $index" ng-click="vm.goToStep($index)">done</i>
           <i class='material-icons boiler-sequencer-progress-line' md-colors="{color:'primary-900'}" ng-if="$index < vm.steps.length - 2">remove</i>
         </div>
 

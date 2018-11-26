@@ -24,12 +24,7 @@ var boilerDialog = function(log) {
       const unwatchSize = $scope.$watch('$scope.vm.size', () => {
         log.setStack(boiler.enums.codeBlocks.directive, ['boilerDialog', '$scope.$watch($scope.vm.size)']);
         log.debug('$scope.vm.size', $scope.vm.size);
-        let width = boiler.config.dialog.size[$scope.vm.size] + 'px' || boiler.config.dialog.size.medium + 'px';
-        $scope.vm.maxWidth = {
-          width: '100%',
-          'max-width': width
-        };
-
+        $scope.vm.setSize($scope.vm.size);
         unwatchSize();
       });
     },
