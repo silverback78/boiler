@@ -22,6 +22,12 @@
   </div>
 </boiler-container>
 
-<boiler-container theme="accent" size="large" padding="true" ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
-  <boiler-login on-create-user="vm.refreshPagers()"></boiler-login>
-</boiler-container>
+<div layout="row" md-colors="{backgroundColor:'primary-900'}">
+  <div flex-xs="0" flex-sm="25" flex-md="30" flex="35"></div>
+  <div flex>
+    <boiler-container theme="accent" size="large" padding="true" ng-if="vm.currentUser.loaded && !vm.currentUser.authenticated">
+      <boiler-login on-create-user="vm.refreshDecks()"></boiler-login>
+    </boiler-container>
+  </div>
+  <div flex-xs="0" flex-sm="25" flex-md="30" flex="35"></div>
+</div>
