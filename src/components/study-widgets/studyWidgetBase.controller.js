@@ -1,6 +1,6 @@
 'use strict';
 
-var studyWidgetBaseController = function($routeParams, $scope, api, log, stash, vm) {
+var studyWidgetBaseController = function($routeParams, $scope, api, log, vm) {
   log.setStack(boiler.enums.codeBlocks.controller, 'studyWidgetBaseController');
 
   vm.goAgainPrimary = boiler.config.studyWidgets.base.goAgainClass;
@@ -42,22 +42,12 @@ var studyWidgetBaseController = function($routeParams, $scope, api, log, stash, 
 
   vm.initialize = () => {
     log.setStack(boiler.enums.codeBlocks.controller, ['studyWidgetBaseController', 'vm.initialize()']);
-    let stashedCards = stash.get(vm.username + vm.deck);
-
-    if (stashedCards) {
-      log.debug('Getting cards from stash.');
-      vm.originalCards = stashedCards;
-      vm.studyAll();
-    }
-    else {
-      api.getCards(vm.username, vm.deck)
-        .then((response) => {
-          log.debug('Getting cards from server.');
-          vm.originalCards = response.data.cards;
-          stash.set(vm.username + vm.deck, vm.originalCards);
-          vm.studyAll();
-        });
-    }
+    api.getCards(vm.username, vm.deck)
+      .then((response) => {
+        log.debug('Getting cards from server.');
+        vm.originalCards = response.data.cards;
+        vm.studyAll();
+      });
   };
 
   vm.studyAll = () => {
@@ -180,5 +170,5 @@ var studyWidgetBaseController = function($routeParams, $scope, api, log, stash, 
   };
 };
 
-studyWidgetBaseController.$inject = ['$routeParams', '$scope', 'api', 'log', 'stash', 'vm'];
+studyWidgetBaseController.$inject = ['$routeParams', '$scope', 'api', 'log', 'vm'];
 angular.module('boiler').controller('studyWidgetBaseController', studyWidgetBaseController);

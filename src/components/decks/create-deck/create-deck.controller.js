@@ -1,6 +1,6 @@
 'use strict';
 
-var createDeckController = function(addDashesFilter, api, createDeck, log, stash, user) {
+var createDeckController = function(addDashesFilter, api, createDeck, log, user) {
   log.setStack(boiler.enums.codeBlocks.controller, 'createDeckController');
 
   const vm = this;
@@ -35,8 +35,6 @@ var createDeckController = function(addDashesFilter, api, createDeck, log, stash
         deck => api.createDeck(vm.currentUser.username, vm.currentUser.password, deck.name, deck.description, vm.category, deck.cards)
           .then((response) => {
             vm.processingDeck = false;
-            log.debug('Clearing stash for ' + vm.currentUser.username + ' ' + deck.name);
-            stash.set(vm.currentUser.username + deck.name, null);
             if (response.data.statusCode === boiler.config.errorStatus) {
               vm.errors.push({
                 deck: deck.name,
@@ -117,5 +115,5 @@ var createDeckController = function(addDashesFilter, api, createDeck, log, stash
   };
 };
 
-createDeckController.$inject = ['addDashesFilter', 'api', 'createDeck', 'log', 'stash', 'user'];
+createDeckController.$inject = ['addDashesFilter', 'api', 'createDeck', 'log', 'user'];
 angular.module('boiler').controller('createDeckController', createDeckController);
