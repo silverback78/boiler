@@ -12,7 +12,7 @@ var usersViewController = function($routeParams, api, log, go, user) {
   vm.containerSize = boiler.config.container.large;
   vm.go = go;
   vm.thisUser;
-  vm.category = String.empty;
+  vm.category = $routeParams.category;
   vm.deleteDeck;
   vm.editDeck;
   vm.loaded = false;

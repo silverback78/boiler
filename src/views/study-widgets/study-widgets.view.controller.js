@@ -8,6 +8,7 @@ var studyWidgetsViewController = function($routeParams, go, log, user) {
   vm.currentUser = user;
   vm.username = $routeParams.username;
   vm.deck = $routeParams.deck;
+  vm.category = $routeParams.category;
   vm.widget = $routeParams.widget;
   vm.go = go;
 };

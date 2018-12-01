@@ -7,6 +7,7 @@ var selectWidgetController = function($routeParams, go, log) {
 
   vm.username = $routeParams.username;
   vm.deck = $routeParams.deck;
+  vm.category = $routeParams.category;
   vm.go = go;
 };
 

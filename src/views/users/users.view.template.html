@@ -1,6 +1,7 @@
 <boiler-page-header>
-  <span ng-if="vm.username">{{vm.username | removeDashes}}</span>
-  <span ng-if="!vm.username">Users</span>
+  <span ng-if="vm.username">
+    <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | removeDashes}}</span> <span ng-if="vm.category">/</span> <span ng-if="vm.category">{{vm.category | removeDashes}} </span>
+  </span>
 </boiler-page-header>
 
 <boiler-container padding="true" ng-if="vm.loaded">
@@ -15,17 +16,17 @@
         </div>
 
         <md-list class="users-deck-list" ng-if="vm.decks.length > 0">
-          <div class="md-headline users-deck-headline" md-colors="{color:'primary-900'}">Decks <span ng-if="vm.category"> / {{vm.category}}</span></div>
-          <md-list-item ng-repeat="category in vm.categories" ng-click="vm.category=category.name" ng-if="!vm.category">
+          <div class="md-headline users-deck-headline" md-colors="{color:'primary-900'}"><span ng-if="vm.category">{{vm.category | removeDashes}}</span></div>
+          <md-list-item ng-repeat="category in vm.categories" ng-click="vm.go.toUser(vm.username, category.name)" ng-if="!vm.category">
             <i class="material-icons" md-colors="{color:'accent-900'}">label</i>
-            <md-truncate flex class="users-row-text">{{category.name}}</md-truncate>
+            <md-truncate flex class="users-row-text">{{category.name | removeDashes}}</md-truncate>
           </md-list-item>
 
-          <md-list-item ng-click="vm.category=''" ng-if="vm.category">
+          <md-list-item ng-click="vm.go.toUser(vm.username)" ng-if="vm.category">
             <i class="material-icons">keyboard_backspace</i>
           </md-list-item>
 
-          <md-list-item ng-if="vm.category == deck.category" ng-repeat="deck in vm.decks" ng-click="vm.go.toWidget(vm.username, deck.name, 'card-list')">
+          <md-list-item ng-if="vm.category == deck.category" ng-repeat="deck in vm.decks" ng-click="vm.go.toWidget(vm.username, deck.name, vm.category, 'card-list')">
             <i class="material-icons" md-colors="{color:'primary-900'}">widgets</i>
             <md-truncate flex class="users-row-text">{{deck.name | removeDashes}} <small ng-if="deck.description"> - {{deck.description}}</small></md-truncate>
             <md-menu ng-if="vm.currentUser.username === vm.username">

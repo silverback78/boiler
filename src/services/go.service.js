@@ -6,16 +6,24 @@ var go = function($location, log, addDashesFilter) {
     $location.path('/');
   };
 
-  const toUser = (user) => {
+  const toUser = (user, category) => {
     user = addDashesFilter(user);
-    log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ')']);
-    $location.path('users/' + user);
 
+    category = category
+      ? '/' + addDashesFilter(category)
+      : String.empty;
+
+    log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ', ' + category + ')']);
+    $location.path('users/' + user + category);
   };
 
-  const toWidget = (user, deck, widget) => {
-    log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ', ' + deck + ', ' + widget + ')']);
-    $location.path('users/' + user + '/' + deck + '/' + widget);
+  const toWidget = (user, deck, category, widget) => {
+    category = category
+      ? '/' + addDashesFilter(category)
+      : String.empty;
+
+    log.setStack(boiler.enums.codeBlocks.service, ['go', 'user(' + user + ', ' + deck + ', ' + category + ', ' + widget + ')']);
+    $location.path('users/' + user + category + '/' + deck + '/' + widget);
   };
 
   const toHowItWorks = () => {

@@ -2,7 +2,11 @@
 
 var removeDashes = function() {
   const removeDashes = (str) => {
-    if (str) return str.replaceAll(boiler.config.user.displayDash, boiler.config.user.displaySpace);
+    if (str) {
+      str = str.replaceAll(boiler.config.user.displayTrippleDash, boiler.config.user.displayLongDash);
+      str = str.replaceAll(boiler.config.user.displayDash, boiler.config.user.displaySpace);
+      return str;
+    }
     return;
   };
 

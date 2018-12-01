@@ -87,7 +87,10 @@
     <div ng-show="!vm.showInstructions">
       <md-input-container class="md-block" flex>
         <label>Optional Category</label>
-        <input name="category" ng-model="vm.category" type="text">
+        <input name="category" ng-model="vm.category" maxlength="64" type="text" ng-pattern="/^[a-z0-9\- ]+$/i">
+        <div ng-messages="vm.child_createDeck.sequencerForm.category.$error" ng-show="vm.child_createDeck.sequencerForm.category.$dirty">
+          <div ng-message="pattern">Category must be alphanumeric. Can include dashes and spaces.</div>
+        </div>
       </md-input-container>
 
       <md-input-container class="md-block boiler-create-card-deck-text">

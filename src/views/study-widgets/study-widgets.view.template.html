@@ -1,6 +1,6 @@
 <boiler-page-header>
   <span ng-if="vm.username && vm.deck" class="study-widgets-page-header">
-    <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | removeDashes}}</span> / {{vm.deck | removeDashes}}
+    <span ng-click="vm.go.toUser(vm.username)" class="study-widgets-user-link">{{vm.username | removeDashes}}</span> <span ng-if="vm.category">/</span> <span ng-if="vm.category" ng-click="vm.go.toUser(vm.username, vm.category)" class="study-widgets-user-link">{{vm.category | removeDashes}}</span> / {{vm.deck | removeDashes}}
   </span>
 </boiler-page-header>
 
@@ -11,7 +11,7 @@
 
       <boiler-select-widget></boiler-select-widget>
 
-      <boiler-card-list ng-if="vm.widget === 'card-list'"></boiler-card-list>
+      <boiler-card-list ng-if="vm.widget === 'card-list'" category="vm.category"></boiler-card-list>
 
       <boiler-flashcards ng-if="vm.widget === 'flashcards'"></boiler-flashcards>
 
